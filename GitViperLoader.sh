@@ -19,11 +19,8 @@ alias d="gvclear && git diff"
 alias ds="d --staged"
 
 # logs
-alias log="gitviper_log"
-# -v
+alias log="gitviper -t -b -s -st -ln -1 | gvless"
 alias log2="git log --stat --date=relative"
-# -vv
-alias log3="git log --decorate --stat --pretty=format:'%C(auto)%d %Cgreen%h%Creset (%ar - %Cblue%an%Creset%C(dim white)), %s%n'"
 alias graph='git log --graph --oneline --decorate --all'
 alias gt="g --since='6am'"
 alias gg="git log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h %C(reset)%C(red)(%ar)%C(reset) %C(dim white)%an%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)' --all"

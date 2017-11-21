@@ -21,7 +21,7 @@ def list_tasks():
 	for f in files:
 		count_tasks(osp.join(f[0], f[1]), counter_dict)
 
-	line1 = "\n "
+	line1 = " "
 	line2 = "\n "
 
 	max_task_chars = 0
