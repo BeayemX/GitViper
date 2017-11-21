@@ -34,6 +34,6 @@ settings.add_task(Task("xxx", "XXX", CYAN, BG_CYAN, 0))
 settings.add_task(Task("asdf", "asdf", CYAN, BG_CYAN, 2))
 settings.add_task(Task("wip", "WIP", CYAN, BG_CYAN, 4))
 
-# task with a priority below 0 will be displayed in a second line
+# task with a priority below 1 will be displayed in a second line
 # settings.add_task(Task("print", "print", BLUE, BG_BLUE, -2))
 # settings.add_task(Task("log", "Log", BLUE, BG_BLUE, -1))
