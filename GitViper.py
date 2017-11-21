@@ -32,7 +32,6 @@ args = parser.parse_args()
 window_width = gitviper.utilities.get_window_size().x
 text = label + " " + version + "-" + branch
 text = text.rjust(int(window_width))
-#print(text, end="", flush=True)
 print(text)
 
 try:
