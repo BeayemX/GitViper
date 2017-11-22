@@ -5,22 +5,27 @@ GitViper is a tool to improve the experience when using Git with the command lin
 ## Overview
 The overview is split into different categories. Each category is only shown if there is content to be shown.
 
-### Tasks
+**Tasks**
+
 A task on a keyword you can define. Usually something like `TODO`, `FIXME` or `HACK`. The task category lists the count of all defined keywords throughout the project (directories or filetypes can be excluded).
 
 
-### Branches
+**Branches**
+
 Every remote and every branch on the remote is listed. 
 Every local branch is listed, highlights its tracking branch and shows how many commits it is ahead and behind.
 
-### Commits
+**Commits**
+
 This category shows the last few commits, their committed time and if these commits have different authors, also the authors' names.
 The header also shows the tracking branch and how many commits can be pushed or pulled. If the current branch does not have a tracking branch it shows a hint that it is a local branch.
 
-### Stash
+**Stash**
+
 This category shows all stashes, their stash-IDs and their stash messages.
 
-### Status
+**Status**
+
 The status category shows all staged, unstaged and untracked files. Each subcategory will only be display if there are files that belong to that subcategory.
 
 ![GitViper overview](Pictures/GitViperOverview.png)
