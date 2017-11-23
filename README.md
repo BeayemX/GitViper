@@ -9,6 +9,8 @@ gitviper --help
 ```
 
 ## Main view
+![GitViper overview](Pictures/GitViperOverview.png)
+
 The main view is split into different categories. Each category is only shown if there is content to be shown. You can also disable specific categories by passing arguments to GitViper.
 
 **Tasks**
@@ -34,11 +36,10 @@ This category shows all stashes, their stash-IDs and their stash messages.
 
 The status category shows all staged, unstaged and untracked files. Each subcategory will only be display if there are files that belong to that subcategory.
 
-![GitViper overview](Pictures/GitViperOverview.png)
-
 ## Task list
-The task list is used to show every task (that has been defined in the settings) and where it occurs. It shows the line content, the file name and the line number.
 ![GitViper task list](Pictures/GitViperTodo.png)
+
+The task list is used to show every task (that has been defined in the settings) and where it occurs. It shows the line content, the file name and the line number.
 
 
 ## Installation
