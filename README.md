@@ -1,5 +1,6 @@
-# GitViper
 <img alt="GitViper logo" src="Pictures/GitViperLogo.png" width="256">
+
+# GitViper
 GitViper is a tool to improve the experience when using Git with the command line by showing you the current state of the repository. This tool is designed to only display git related information. You can still work with Git and modify files the way you want.
 
 ## How to use GitViper
