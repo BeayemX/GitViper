@@ -52,3 +52,5 @@ try:
             gitviper.list_status()
 except KeyboardInterrupt:
     print()
+except BrokenPipeError: # occurs sometimes after quitting less when big git-logs are displayed
+    pass
