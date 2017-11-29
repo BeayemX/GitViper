@@ -35,7 +35,7 @@ def list_tasks():
 		if counter_dict[task.value] == 0:
 			continue
 		color = task.bgcolor
-		line = color + BLACK + " " + task.representation.ljust(max_task_chars) + spacing + str(counter_dict[task.value]).rjust(max_digits) + " " + RESET + taskspacing
+		line = BLACK + color + " " + task.representation.ljust(max_task_chars) + spacing + str(counter_dict[task.value]).rjust(max_digits) + " " + RESET + taskspacing
 		if task.priority > 0:
 			line1 += line
 		else:
