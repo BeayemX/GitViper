@@ -20,14 +20,17 @@ class Settings:
 
 
     def add_task(self, task):
+        def get_key(task):
+            return task.priority
         self.tasks.append(task)
+        self.tasks = sorted(self.tasks, key=get_key, reverse=True)
 
 
 settings = Settings()
 
 settings.add_task(Task("todo", "Todo", GREEN, BG_GREEN, 5))
-settings.add_task(Task("fixme", "FixMe", YELLOW, BG_YELLOW, 10))
-settings.add_task(Task("hack", "Hack", RED, BG_RED, 7))
+settings.add_task(Task("fixme", "FixMe", RED, BG_RED, 10))
+settings.add_task(Task("hack", "Hack", YELLOW, BG_YELLOW, 7))
 
 settings.add_task(Task("xxx", "XXX", CYAN, BG_CYAN, 0))
 
