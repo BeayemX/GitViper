@@ -4,13 +4,15 @@
 GitViper is a tool to improve the experience when using Git with the command line by showing you the current state of the repository. This tool is designed to only display git related information. You can still work with Git and modify files the way you want.
 
 ## How to use GitViper
-There are two python files you can use. `GitViper.py` is used to display the overview for the current repository. Your current working directory has to be the root level of a git repsitory.
+There are two python files you can use. `GitViper.py` is used to display the mainview for the current repository. Your current working directory has to be the root level of a git repsitory.
 The second file is `TaskList.py` which is used to list all occurences of task-keywords.
 
-For convenience's sake there is also `GitViperLoader.sh` which can be used to add aliases for these two files to your bash environment. It also adds some more shortcuts.
+For convenience's sake there is also `GitViperLoader.sh` which can be used to add aliases for these two files to your bash environment by running 
+```
+source ~/GitViper/GitViperLoader.sh
+```
+or putting this line into your `.bashrc`. Just make sure you are using the right directory. It also adds some more shortcuts to improve the overall experience. For example if you use this convencience-file aliases all commands clear the screen before showing information. If you just want to use the python files you can still take a look inside this file to see possible calls with different command line arguments. or you can show the help by executing:
 
-### Old description
-To be able to use GitViper you just have to load the `GitViperLoader.sh` file into your bash (i.e. `source ~/GitViper/GitViperLoader.sh`). This file adds aliases for both python scripts (`GitViper.py` and `TaskList.py`) to your bash environment. It also adds shortcuts to some Git commands to bypass the `git ` prefix needed to execute the command and also to clear the screen before the execution and showing the GitViper main view afterwards. If you want to modify the aliases or see possible GitViper calls, take a look at this file. To see all possible command line arguments use
 ```
 gitviper --help
 ```
