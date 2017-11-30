@@ -68,3 +68,7 @@ sudo apt-get install python3-humanize
 ```
 
 on Linux Mint or something similar on other distros.
+
+
+## Feedback and bugs
+If you encounter bugs or want to request new features just open an issue.
