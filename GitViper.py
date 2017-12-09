@@ -37,18 +37,19 @@ text = text.rjust(int(window_width))
 print(text)
 
 start_time = time.time()
+current_time = start_time
 
 time_separator = "".join(["-"] * int(window_width))
 
 def show_time():
-    global start_time
-    delta_time = str(round(time.time() - start_time, 3))
+    global current_time
+    delta_time = str(round(time.time() - current_time, 3))
     print(BOLD + BLUE + (delta_time + " seconds ").rjust(int(window_width)) + RESET)
     reset_time()
 
 def reset_time():
-    global start_time
-    start_time = time.time()
+    global current_time
+    current_time = time.time()
 
 def finalize_category(category_is_visible):
     if category_is_visible:
@@ -82,3 +83,7 @@ except KeyboardInterrupt:
     print()
 except BrokenPipeError: # occurs sometimes after quitting less when big git-logs are displayed
     pass
+
+if args.show_time:
+    current_time = start_time
+    show_time()
