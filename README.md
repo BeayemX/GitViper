@@ -34,7 +34,7 @@ Every local branch is listed, highlights its tracking branch and shows how many 
 
 **Commits**
 
-This category shows the last few commits, their committed time and if these commits have different authors, also the authors' names.
+This category shows the last few commits, their committed time and if these commits have different authors, also the authors' names. The first word of each commit message is also highlighted to make it easier to identify each commit's purpose.
 The header also shows the tracking branch and how many commits can be pushed or pulled. If the current branch does not have a tracking branch it shows a hint that it is a local branch.
 
 **Stash**
