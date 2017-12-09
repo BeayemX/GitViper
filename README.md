@@ -50,6 +50,13 @@ The status category shows all staged, unstaged and untracked files. Each subcate
 
 The task list is used to show every task (that has been defined in the settings) and where it occurs. It shows the line content, the file name and the line number.
 
+## Settings
+Many things that are displayed can be adjusted in the settings files. You can set task-keywords and their priorities and files and directories that should be excluded.
+There are two files used for the changing these settings. `settings.py` is a file which basic implementation can be used for every project. `additional_settings.py` is a file used for more specific stuff that should not be commited. Such things could for example be user specific task keywords (e.g. the user's name). Because this file is already tracked in this repository you have to execute 
+```
+git update-index --assume-unchanged gitviper/additional_settings.py
+```
+to ignore changes made to this file.
 
 ## Installation
 GitViper uses **GitPython** for working with the git repository and the **humanize** package to display times and dates in a more readable way.
