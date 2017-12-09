@@ -12,8 +12,6 @@ occurences_dict = {}
 spacing = "   "
 window_padding = " "
 
-for k in tasks:
-    occurences_dict[k] = []
 
 class Occurence:
     def __init__(self, path, filename, linenumber, linecontent):
@@ -22,13 +20,13 @@ class Occurence:
         self.linenumber = linenumber
         self.linecontent = linecontent
 
-def fill_dictionary(lookup, file):
+def fill_dictionary(task, file):
     occurences = []
     fullpath = osp.join(file[0], file[1])
     with open(fullpath, 'r') as myFile:
         try:
             for num, line in enumerate(myFile, 1):
-                if lookup in line.lower():
+                if task.value in line.lower():
                     occurences.append([num, line])
         except UnicodeDecodeError:
             pass
@@ -38,31 +36,31 @@ def fill_dictionary(lookup, file):
             occ = Occurence(file[0], file[1], o[0], o[1])
             occurences_dict[task].append(occ)
 
-print(" " + BG_WHITE + BLACK + "  Tasks  " + RESET)
-print()
+def list_tasks():
+    for k in tasks:
+        occurences_dict[k] = []
 
-# get files as list
-files = utils.get_files()
+    # get files as list
+    files = utils.get_files()
 
-# fill dictionary
-for task in tasks:
-    for f in files:
-        fill_dictionary(task.value, f)
+    # fill dictionary
+    for task in tasks:
+        for f in files:
+            fill_dictionary(task, f)
 
-# create list of dict entries and ignore empty task-entries
-occurences_dict_list = []
-for key in occurences_dict:
-    if len(occurences_dict[key]) == 0:
-        continue
-    else:
-        occurences_dict_list.append((key, occurences_dict[key]))
+    # create list of dict entries and ignore empty task-entries
+    occurences_dict_list = []
+    for key in occurences_dict:
+        if len(occurences_dict[key]) == 0:
+            continue
+        else:
+            occurences_dict_list.append((key, occurences_dict[key]))
 
-# sort list by priority
-def getKey(item):
-    return item[0].priority
-occurences_dict_sorted_by_priority = sorted(occurences_dict_list, reverse=True, key=getKey)
+    # sort list by priority
+    def getKey(item):
+        return item[0].priority
+    occurences_dict_sorted_by_priority = sorted(occurences_dict_list, reverse=True, key=getKey)
 
-try:
     # print table
     for kv in occurences_dict_sorted_by_priority:
         key = kv[0]
@@ -110,6 +108,13 @@ try:
 
         print()
 
+print(" " + BG_WHITE + BLACK + "  Tasks  " + RESET)
+print()
+
+try:
+    list_tasks()
+except KeyboardInterrupt:
+    print(BG_RED + WHITE + " Execution canceled... " + RESET)
 except BrokenPipeError: # occurs sometimes after quitting less when big git-logs are displayed
     pass
 
