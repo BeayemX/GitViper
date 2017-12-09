@@ -11,7 +11,10 @@ spacing_files = "    "
 def list_status():
 	if connection.repo.is_dirty() or len(connection.repo.untracked_files) > 0:
 		_list_status()
-		print()
+
+		return True
+
+	return False
 
 def _list_status():
 	gui.print_header("Status", BG_GREEN)

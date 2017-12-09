@@ -38,37 +38,46 @@ print(text)
 
 start_time = time.time()
 
+time_separator = "".join(["-"] * int(window_width))
+
 def show_time():
     global start_time
-    if args.show_time:
-        print("%s seconds" % round(time.time() - start_time, 3))
-        start_time = time.time()
-        print("-------------------------------------------------------")
-        print()
+    delta_time = str(round(time.time() - start_time, 3))
+    print(BOLD + BLUE + (delta_time + " seconds ").rjust(int(window_width)) + RESET)
+    reset_time()
 
+def reset_time():
+    global start_time
+    start_time = time.time()
+
+def finalize_category(category_is_visible):
+    if category_is_visible:
+        if args.show_time:
+            show_time()
+            print(BOLD + BLUE + time_separator + RESET)
+            print()
+        else:
+            print()
+    else:
+        reset_time()
 
 try:
     if not args.hide_tasks:
-        gitviper.list_tasks()
-
-    show_time()
+        finalize_category(gitviper.list_tasks())
 
     # git
     gitconnector.connect()
 
     if connection.is_git_repo:
         if not args.hide_branches:
-            gitviper.list_branches()
-            show_time()
+            finalize_category(gitviper.list_branches())
         if not args.hide_logs:
-            gitviper.list_logs(args.log_number)
-            show_time()
+            finalize_category(gitviper.list_logs(args.log_number))
         if not args.hide_stash:
-            gitviper.list_stash()
-            show_time()
+            finalize_category(gitviper.list_stash())
         if not args.hide_status:
-            gitviper.list_status()
-            show_time()
+            finalize_category(gitviper.list_status())
+
 except KeyboardInterrupt:
     print()
 except BrokenPipeError: # occurs sometimes after quitting less when big git-logs are displayed

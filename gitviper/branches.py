@@ -21,7 +21,8 @@ def list_branches():
         else:
             _list_all_branches()
 
-        print()
+        return True
+    return False
 
 def should_show_branches():
     remotes = connection.repo.remotes

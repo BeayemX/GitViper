@@ -14,7 +14,10 @@ spacing = "  "
 def list_logs(num):
 	if show_logs():
 		log(num)
-		print()
+
+		return True
+
+	return False
 
 def show_logs():
 	try:

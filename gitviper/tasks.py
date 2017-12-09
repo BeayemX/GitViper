@@ -45,8 +45,11 @@ def list_tasks():
 		print(line1)
 	if len(line2.strip()) > 0:
 		print(line2)
+
 	if len(line1.strip()) > 0 or len(line2.strip()) > 0:
-		print()
+		return True
+
+	return False
 
 def count_tasks(filename, counter_dict):
 	with open(filename, 'r') as myfile:

@@ -10,7 +10,10 @@ spacing = 2
 def list_stash():
 	if stash_exists():
 		print_stash()
-		print()
+
+		return True
+
+	return False
 
 def stash_exists():
 	return len(connection.repo.git.stash("list")) > 0
