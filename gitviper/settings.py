@@ -1,5 +1,3 @@
-import os.path
-
 import gitviper.additional_settings as add_sett
 
 from gitviper.task import Task
