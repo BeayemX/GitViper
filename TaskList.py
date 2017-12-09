@@ -62,49 +62,54 @@ def getKey(item):
     return item[0].priority
 occurences_dict_sorted_by_priority = sorted(occurences_dict_list, reverse=True, key=getKey)
 
-# print table
-for kv in occurences_dict_sorted_by_priority:
-    key = kv[0]
-    value = kv[1]
-    real_values = []
+try:
+    # print table
+    for kv in occurences_dict_sorted_by_priority:
+        key = kv[0]
+        value = kv[1]
+        real_values = []
 
-    for o in value:
-        real_value_entry = []
-        linecontent = o.linecontent.strip()
+        for o in value:
+            real_value_entry = []
+            linecontent = o.linecontent.strip()
 
-        # strip task regardless of capitalization
-        idx = linecontent.lower().find(key.value)
-        linecontent = "".join(linecontent.split(linecontent[idx:idx+len(key.value)]))
+            # strip task regardless of capitalization
+            idx = linecontent.lower().find(key.value)
+            linecontent = "".join(linecontent.split(linecontent[idx:idx+len(key.value)]))
 
-        # strip commenting symbols
-        linecontent = "".join(linecontent.split("#"))
-        linecontent = "".join(linecontent.split("//"))
-        linecontent = linecontent.strip()
+            # strip commenting symbols
+            linecontent = "".join(linecontent.split("#"))
+            linecontent = "".join(linecontent.split("//"))
+            linecontent = linecontent.strip()
 
-        # add to data used for creating table
-        real_value_entry.append(window_padding + key.representation)
-        real_value_entry.append(linecontent)
-        real_value_entry.append(o.filename.rjust(0).strip())
-        real_value_entry.append(str(o.linenumber))
+            # add to data used for creating table
+            real_value_entry.append(window_padding + key.representation)
+            real_value_entry.append(linecontent)
+            real_value_entry.append(o.filename.rjust(0).strip())
+            real_value_entry.append(str(o.linenumber))
 
-        real_values.append(real_value_entry)
+            real_values.append(real_value_entry)
 
-    # find max column widths
-    max_widths = [0] * 4
-    for v in real_values:
-        for i in range(len(v)):
-            max_widths[i] = max(max_widths[i], len(v[i]))
+        # find max column widths
+        max_widths = [0] * 4
+        for v in real_values:
+            for i in range(len(v)):
+                max_widths[i] = max(max_widths[i], len(v[i]))
 
-    # clamp to window width
-    s = len(spacing)
-    availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding)
-    max_widths[1] = availablespace
+        # clamp to window width
+        s = len(spacing)
+        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding)
+        max_widths[1] = availablespace
 
-    for v in real_values:
-        text = key.color + v[0].ljust(max_widths[0]) + spacing + RESET
-        text += v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
-        text += v[2].ljust(max_widths[2]) + spacing
-        text += v[3].rjust(max_widths[3])
-        print(text)
+        for v in real_values:
+            text = key.color + v[0].ljust(max_widths[0]) + spacing + RESET
+            text += v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
+            text += v[2].ljust(max_widths[2]) + spacing
+            text += v[3].rjust(max_widths[3])
+            print(text)
 
-    print()
+        print()
+
+except BrokenPipeError: # occurs sometimes after quitting less when big git-logs are displayed
+    pass
+
