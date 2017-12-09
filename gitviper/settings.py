@@ -1,12 +1,9 @@
-from gitviper.colors import *
+import os.path
 
-class Task:
-    def __init__(self, value, representation=None, color=None, bgcolor=None, priority=0):
-        self.value = value
-        self.representation = representation
-        self.color = color
-        self.bgcolor = bgcolor
-        self.priority = priority
+import gitviper.additional_settings as add_sett
+
+from gitviper.task import Task
+from gitviper.colors import *
 
 class Settings:
     def __init__(self):
@@ -40,3 +37,5 @@ settings.add_task(Task("wip", "WIP", CYAN, BG_CYAN, 4))
 # task with a priority below 1 will be displayed in a second line
 # settings.add_task(Task("print", "print", BLUE, BG_BLUE, -2))
 # settings.add_task(Task("log", "Log", BLUE, BG_BLUE, -1))
+
+add_sett.load_additional_settings(settings)
