@@ -3,6 +3,30 @@
 # GitViper
 GitViper is a tool to improve the experience when using Git with the command line by showing you the current state of the repository. This tool is designed to only display git related information. You can still work with Git and modify files the way you want.
 
+## Installation
+GitViper uses **GitPython** for working with the git repository and the **humanize** package to display times and dates in a more readable way.
+
+Both can be installed using
+
+```
+pip3 install GitPython
+pip3 install humanize
+```
+
+which needs:
+
+```
+sudo apt install python3-pip
+```
+
+Alternativly the humanize package can be installed with
+
+```
+sudo apt-get install python3-humanize
+```
+
+on Linux Mint or something similar on other distros.
+
 ## How to use GitViper
 There are two python files you can use. `GitViper.py` is used to display the mainview for the current repository. Your current working directory has to be the root level of a git repsitory.
 The second file is `TaskList.py` which is used to list all occurences of task-keywords.
@@ -57,25 +81,6 @@ There are two files used for the changing these settings. `settings.py` is a fil
 git update-index --assume-unchanged gitviper/additional_settings.py
 ```
 to ignore changes made to this file.
-
-## Installation
-GitViper uses **GitPython** for working with the git repository and the **humanize** package to display times and dates in a more readable way.
-
-Both can be installed using
-
-```
-pip3 install GitPython
-pip3 install humanize
-```
-
-Alternativly the humanize package can be installed with
-
-```
-sudo apt-get install python3-humanize
-```
-
-on Linux Mint or something similar on other distros.
-
 
 ## Feedback and bugs
 If you encounter bugs or want to request new features just open an issue.
