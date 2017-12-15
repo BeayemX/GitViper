@@ -4,6 +4,12 @@
 GitViper is a tool to improve the experience when using Git with the command line by showing you the current state of the repository. This tool is designed to only display git related information. You can still work with Git and modify files the way you want.
 
 ## Installation
+GitViper builds on top of Git, therefore it is required to have Git installed on your system. Just use your package manager to install Git. The command should look something along these lines:
+```
+sudo apt-get install git
+sudo dnf install git
+```
+
 GitViper uses **GitPython** for working with the git repository and the **humanize** package to display times and dates in a more readable way.
 
 Both can be installed using
