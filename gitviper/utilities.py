@@ -23,7 +23,7 @@ def get_files():
 		# TODO use generator?
 		for f in filenames:
 			for exf in settings.excluded_files:
-				if exf in f:
+				if exf.lower() in f.lower():
 					break
 			else:
 				files.append((dirpath, f))
