@@ -82,11 +82,7 @@ You can display the task list by running the `TaskList.py` file or if you are us
 
 ## Settings
 Many things that are displayed can be adjusted in the settings files. You can set task-keywords and their priorities and files and directories that should be excluded.
-There are two files used for the changing these settings. `settings.py` is a file which basic implementation can be used for every project. `additional_settings.py` is a file used for more specific stuff that should not be commited. Such things could for example be user specific task keywords (e.g. the user's name). Because this file is already tracked in this repository you have to execute 
-```
-git update-index --assume-unchanged gitviper/additional_settings.py
-```
-to ignore changes made to this file.
+There is one main file used for the changing these settings. `settings.py` is a file which basic implementation can be used for every project. You can create an optional file with the name `additional_settings.py` to use for user specific settings such as user specific taskwords (e.g. the user's name) or specific paths. This file is included in the gitignore-file and therefore will not be commited. 
 
 ## Feedback and bugs
 If you encounter bugs or want to request new features just open an issue.
