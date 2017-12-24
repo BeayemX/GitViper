@@ -1,4 +1,4 @@
-import gitviper.additional_settings as add_sett
+import os.path
 
 from gitviper.task import Task
 from gitviper.colors import *
@@ -53,4 +53,8 @@ settings.add_excluded_file(".sh")
 settings.add_excluded_file(".svg")
 
 # load additional settings
-add_sett.load_additional_settings(settings)
+try:
+    import gitviper.additional_settings as add_sett
+    add_sett.load_additional_settings(settings)
+except ImportError:
+    pass
