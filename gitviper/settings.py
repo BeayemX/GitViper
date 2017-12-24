@@ -51,6 +51,7 @@ settings.add_excluded_directory(".git")
 settings.add_excluded_file("settings.py")
 settings.add_excluded_file(".sh")
 settings.add_excluded_file(".svg")
+settings.add_excluded_file("readme")
 
 # load additional settings
 try:
