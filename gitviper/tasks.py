@@ -28,8 +28,9 @@ def list_tasks():
 	max_digits = 0
 
 	for task in s.tasks:
-		max_task_chars = max(len(task.representation), max_task_chars)
-		max_digits = max(len(str(counter_dict[task.value])), max_digits)
+		if counter_dict[task.value] > 0:
+			max_task_chars = max(len(task.representation), max_task_chars)
+			max_digits = max(len(str(counter_dict[task.value])), max_digits)
 
 	for task in s.tasks:
 		if counter_dict[task.value] == 0:
