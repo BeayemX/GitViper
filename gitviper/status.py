@@ -80,11 +80,8 @@ def _count_real_diffs(diffs):
 	return len(list(diffs.iter_change_type('A'))) + len(list(diffs.iter_change_type('D'))) + len(list(diffs.iter_change_type('R'))) + len(list(diffs.iter_change_type('M')))
 
 def iterate_diffs(diffs, text):
-	diff_iter = list(diffs)
-
-	if len(diff_iter) > 0:
-		for d in diff_iter:
-			print(spacing_files + text + ":\t" + d.a_path)
+	for d in diffs:
+		print(spacing_files + text + ":\t" + d.a_path)
 
 def print_sub_header(text, color):
 	print()
