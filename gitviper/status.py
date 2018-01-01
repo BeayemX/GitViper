@@ -32,8 +32,8 @@ def list_staged_files():
 		staged_diffs = connection.repo.index.diff(None, staged=True)
 
 	if len(staged_diffs) > 0:
-		# print_sub_header("Staged files", GREEN)
 		print_sub_header("Staged files", None)
+
 		set_color(GREEN)
 		_list_diffs(staged_diffs, flip)
 		set_color(RESET)
@@ -42,8 +42,8 @@ def list_unstaged_files():
 	unstaged_diffs = connection.repo.index.diff(None)
 
 	if len(unstaged_diffs) > 0:
-		# print_sub_header("Unstaged files", RED)
 		print_sub_header("Unstaged files", None)
+
 		set_color(RED)
 		_list_diffs(unstaged_diffs, False)
 		set_color(RESET)
@@ -52,7 +52,6 @@ def list_untracked_files():
 	u_files = connection.repo.untracked_files
 
 	if len(u_files) > 0:
-		# print_sub_header("Untracked files", YELLOW)
 		print_sub_header("Untracked files", None)
 
 		for f in u_files:
@@ -62,14 +61,10 @@ def list_unmerged_paths():
 	unmerged_blobs = connection.repo.index.unmerged_blobs()
 
 	if len(unmerged_blobs) > 0:
-		#print_sub_header("Unmerged paths", BOLD + MAGENTA)
 		print_sub_header("Unmerged paths", None)
 
 		for ublob in unmerged_blobs:
-			# print(spacing_files + ublob + RESET)
 			print(BOLD + MAGENTA + spacing_files + ublob + RESET)
-
-
 
 def _list_diffs(diffs, staged_files):
 	iterate_diffs(diffs.iter_change_type('A'), "deleted" if staged_files else "added")
