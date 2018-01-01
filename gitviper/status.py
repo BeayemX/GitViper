@@ -31,7 +31,7 @@ def list_staged_files():
 		flip = False
 		staged_diffs = connection.repo.index.diff(None, staged=True)
 
-	if len(staged_diffs) > 0:
+	if len(staged_diffs) > 0 and _count_real_diffs(staged_diffs) > 0:
 		print_sub_header("Staged files", None)
 
 		set_color(GREEN)
@@ -71,6 +71,13 @@ def _list_diffs(diffs, staged_files):
 	iterate_diffs(diffs.iter_change_type('D'), "new file" if staged_files else "deleted")
 	iterate_diffs(diffs.iter_change_type('R'), "renamed")
 	iterate_diffs(diffs.iter_change_type('M'), "modified")
+
+# HACK this prevents subcatgory 'staged' showing up if there are unmerged paths
+# because diffs contain one element (per unmerged path?)
+# but when iterating over 'A', 'D', 'R' and 'M'
+# there are no changes...
+def _count_real_diffs(diffs):
+	return len(list(diffs.iter_change_type('A'))) + len(list(diffs.iter_change_type('D'))) + len(list(diffs.iter_change_type('R'))) + len(list(diffs.iter_change_type('M')))
 
 def iterate_diffs(diffs, text):
 	diff_iter = list(diffs)
