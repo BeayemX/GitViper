@@ -34,6 +34,9 @@ def should_show_branches():
         if len(remote.refs) > 1:
             return True
 
+    if len(connection.repo.branches) > 1:
+        return True
+
     return settings.show_all_categories
 
 def _list_all_branches():
