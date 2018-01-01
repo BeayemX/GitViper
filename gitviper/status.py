@@ -32,7 +32,6 @@ def list_staged_files():
 		staged_diffs = connection.repo.index.diff(None, staged=True)
 
 	if len(staged_diffs) > 0:
-		print()
 		# print_sub_header("Staged files", GREEN)
 		print_sub_header("Staged files", None)
 		set_color(GREEN)
@@ -43,7 +42,6 @@ def list_unstaged_files():
 	unstaged_diffs = connection.repo.index.diff(None)
 
 	if len(unstaged_diffs) > 0:
-		print()
 		# print_sub_header("Unstaged files", RED)
 		print_sub_header("Unstaged files", None)
 		set_color(RED)
@@ -54,7 +52,6 @@ def list_untracked_files():
 	u_files = connection.repo.untracked_files
 
 	if len(u_files) > 0:
-		print()
 		# print_sub_header("Untracked files", YELLOW)
 		print_sub_header("Untracked files", None)
 
@@ -65,7 +62,6 @@ def list_unmerged_paths():
 	unmerged_blobs = connection.repo.index.unmerged_blobs()
 
 	if len(unmerged_blobs) > 0:
-		print()
 		#print_sub_header("Unmerged paths", BOLD + MAGENTA)
 		print_sub_header("Unmerged paths", None)
 
@@ -89,6 +85,7 @@ def iterate_diffs(diffs, text):
 			print(spacing_files + text + ":\t" + d.a_path)
 
 def print_sub_header(text, color):
+	print()
 	if color:
 		print(spacing_sub_header + color + text + RESET)
 	else:
