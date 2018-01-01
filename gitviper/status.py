@@ -27,7 +27,7 @@ def list_staged_files():
 	try:
 		flip = True
 		staged_diffs = connection.repo.index.diff(connection.repo.head.commit)
-	except ValueError:
+	except ValueError: # if there are no commits yet, there is nothing to compare against
 		flip = False
 		staged_diffs = connection.repo.index.diff(None, staged=True)
 
