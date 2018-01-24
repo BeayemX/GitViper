@@ -1,4 +1,4 @@
-<img alt="GitViper logo" src="Pictures/GitViperLogo.png" width="256">
+![image](https://user-images.githubusercontent.com/3453076/35360877-8035c5b2-015f-11e8-8ab2-1d74e65e3cd5.png)
 
 # GitViper
 GitViper is a tool to improve the experience when using Git with the command line by showing you the current state of the repository. This tool is designed to only display git related information. You can still work with Git and modify files the way you want.
@@ -48,7 +48,8 @@ gitviper --help
 ```
 
 ## Main view
-![GitViper overview](Pictures/GitViperOverview.png)
+
+![image](https://user-images.githubusercontent.com/3453076/35360910-9935f38e-015f-11e8-9b4f-447c99c8a92a.png)
 
 The main view is split into different categories. Each category is only shown if there is content to be shown. You can also disable specific categories by passing arguments to GitViper.
 
@@ -76,7 +77,8 @@ This category shows all stashes, their stash-IDs and their stash messages.
 The status category shows all staged, unstaged and untracked files. Each subcategory will only be display if there are files that belong to that subcategory.
 
 ## Task list
-![GitViper task list](Pictures/GitViperTodo.png)
+
+![image](https://user-images.githubusercontent.com/3453076/35360923-a97b956e-015f-11e8-9ffc-73ed4df53c3a.png)
 
 You can display the task list by running the `TaskList.py` file or if you are using the `GitViperLoader.sh` file by running `todo`. The task list is used to show every task (that has been defined in the settings) and where it occurs. It shows the line content, the file name and the line number.
 
