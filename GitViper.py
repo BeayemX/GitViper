@@ -64,20 +64,20 @@ def finalize_category(category_is_visible):
         reset_time()
 
 try:
-    if not args.hide_tasks != args.show_only:
+    if args.hide_tasks == args.show_only:
         finalize_category(gitviper.list_tasks())
 
     # git
     gitconnector.connect()
 
     if connection.is_git_repo:
-        if not args.hide_branches != args.show_only:
+        if args.hide_branches == args.show_only:
             finalize_category(gitviper.list_branches())
-        if not args.hide_logs != args.show_only:
+        if args.hide_logs == args.show_only:
             finalize_category(gitviper.list_logs(args.log_number))
-        if not args.hide_stash != args.show_only:
+        if args.hide_stash == args.show_only:
             finalize_category(gitviper.list_stash())
-        if not args.hide_status != args.show_only:
+        if args.hide_status == args.show_only:
             finalize_category(gitviper.list_status())
 
 except KeyboardInterrupt:
