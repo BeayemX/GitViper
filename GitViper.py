@@ -25,6 +25,7 @@ parser.add_argument("-st", "--hide-stash", action='store_true', help="hide the s
 parser.add_argument("-l", "--hide-logs", action='store_true', help="hide the commit logs category")
 parser.add_argument("-ln", "--log-number", type=int, default='5', help="specifiy the number of logs that will be shown")
 parser.add_argument("-tm", "--show-time", action='store_true', help="show time needed for each category")
+parser.add_argument("-inv", "--show-only", action='store_true', help="only show the given categories instead of hiding them")
 
 args = parser.parse_args()
 #pprint(vars(args))
@@ -63,20 +64,20 @@ def finalize_category(category_is_visible):
         reset_time()
 
 try:
-    if not args.hide_tasks:
+    if not args.hide_tasks != args.show_only:
         finalize_category(gitviper.list_tasks())
 
     # git
     gitconnector.connect()
 
     if connection.is_git_repo:
-        if not args.hide_branches:
+        if not args.hide_branches != args.show_only:
             finalize_category(gitviper.list_branches())
-        if not args.hide_logs:
+        if not args.hide_logs != args.show_only:
             finalize_category(gitviper.list_logs(args.log_number))
-        if not args.hide_stash:
+        if not args.hide_stash != args.show_only:
             finalize_category(gitviper.list_stash())
-        if not args.hide_status:
+        if not args.hide_status != args.show_only:
             finalize_category(gitviper.list_status())
 
 except KeyboardInterrupt:
