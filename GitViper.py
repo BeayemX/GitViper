@@ -10,7 +10,7 @@ import time
 
 # module variables
 label = "GitViper"
-version = "v0.1.4"
+version = "v0.1.5"
 branch = "beta"
 
 # command line arguments
