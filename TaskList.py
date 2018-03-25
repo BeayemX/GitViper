@@ -84,10 +84,11 @@ def list_tasks():
 
             # strip commenting symbols
             # """
-            linecontent = "".join(linecontent.split("#"))
-            linecontent = "".join(linecontent.split("//"))
-            linecontent = "".join(linecontent.split("/*"))
-            linecontent = linecontent.strip()
+            if settings.strip_comment_symbols:
+                linecontent = "".join(linecontent.split("#"))
+                linecontent = "".join(linecontent.split("//"))
+                linecontent = "".join(linecontent.split("/*"))
+                linecontent = linecontent.strip()
             # """
 
             # add to data used for creating table

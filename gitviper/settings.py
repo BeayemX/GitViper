@@ -12,6 +12,7 @@ class Settings:
         self.commit_author_max_length = 20
         self.show_all_categories = False
         self.always_show_authors = False
+        self.strip_comment_symbols = True
 
 
     def add_task(self, task):
