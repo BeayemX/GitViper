@@ -134,10 +134,14 @@ def list_tasks():
         max_widths[1] = availablespace
 
         for v in real_values:
+            if len(v[1]) > max_widths[1]:
+                v[1] = v[1][:max_widths[1]-3] + "..."
+
             taskword = key.color + v[0].ljust(max_widths[0]) + spacing + RESET
             line = v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
             filename = v[2].ljust(max_widths[2] + substitutes[2]) + spacing
             linenumber = v[3].rjust(max_widths[3])
+
 
             # TODO use python3.6 f-strings
             text = "%s%s%s%s"%(taskword,line, filename,linenumber)
