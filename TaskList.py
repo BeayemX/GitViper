@@ -112,11 +112,12 @@ def list_tasks():
             real_values.append(real_value_entry)
 
         # find max column widths
-        substitute = len(BOLD + BOLD_OFF) # substitute for invisible characters for highlighting keywords
+        substitutes = [0] * 4 # substitutes for invisible characters
+        substitutes[1] = len(BOLD + BOLD_OFF) # for highlighting keywords
         if settings.show_path_for_task_list:
-            substitute2 = len(BOLD + BLUE + RESET) # substitute for invisible characters for highlighting filename if also showing path
+            substitutes[2] = len(BOLD + BLUE + RESET) # for highlighting filename if also showing path
         else:
-            substitute2 = 0
+            substitutes[2] = 0
 
 
         max_widths = [0] * 4
@@ -125,17 +126,17 @@ def list_tasks():
                 max_widths[i] = max(max_widths[i], len(v[i]))
 
         if settings.show_path_for_task_list:
-            max_widths[2] -= substitute2
+            max_widths[2] -= substitutes[2]
 
         # clamp to window width
         s = len(spacing)
-        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitute
+        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitutes[1]
         max_widths[1] = availablespace
 
         for v in real_values:
             taskword = key.color + v[0].ljust(max_widths[0]) + spacing + RESET
             line = v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
-            filename = v[2].ljust(max_widths[2] + substitute2) + spacing
+            filename = v[2].ljust(max_widths[2] + substitutes[2]) + spacing
             linenumber = v[3].rjust(max_widths[3])
 
             # TODO use python3.6 f-strings
