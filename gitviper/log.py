@@ -100,7 +100,11 @@ def log(max_commit_count):
 			text += GREEN + commit[1].ljust(max_col_widths[1]) + RESET
 
 		# highlight first word of each message
-		msg = commit[2][:msg_length]
+		msg = commit[2] # [:max_col_widths[2]]
+
+		if len(msg) > max_col_widths[2]:
+			msg = msg[:max_col_widths[2]-3] + "..."
+
 		msg = msg.split(" ")
 		msg[0] = BOLD + msg[0] + RESET
 		text += " ".join(msg)
