@@ -103,7 +103,7 @@ def list_tasks():
             real_value_entry.append(linecontent)
 
             if settings.show_path_for_task_list:
-                real_value_entry.append(path + BOLD + BLUE + o.filename.rjust(0).strip() + RESET)
+                real_value_entry.append(path + BOLD + key.color + o.filename.rjust(0).strip() + RESET)
             else:
                 real_value_entry.append(path + o.filename.rjust(0).strip())
 
