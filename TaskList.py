@@ -85,26 +85,47 @@ def list_tasks():
             # strip commenting symbols
             # """
             if settings.strip_comment_symbols:
-                linecontent = "".join(linecontent.split("#"))
-                linecontent = "".join(linecontent.split("//"))
-                linecontent = "".join(linecontent.split("/*"))
+                linecontent = linecontent.replace("#", "")
+                linecontent = linecontent.replace("//", "")
+                linecontent = linecontent.replace("/*", "")
+                linecontent = linecontent.replace("\t", " ")
                 linecontent = linecontent.strip()
             # """
 
             # add to data used for creating table
+            if settings.show_path_for_task_list:
+                path = o.path.replace(os.getcwd(), "") + "/"
+                path = path.lstrip("/")
+            else:
+                path = ""
+
             real_value_entry.append(window_padding + key.representation)
             real_value_entry.append(linecontent)
-            real_value_entry.append(o.filename.rjust(0).strip())
+
+            if settings.show_path_for_task_list:
+                real_value_entry.append(path + BOLD + BLUE + o.filename.rjust(0).strip() + RESET)
+            else:
+                real_value_entry.append(path + o.filename.rjust(0).strip())
+
             real_value_entry.append(str(o.linenumber))
 
             real_values.append(real_value_entry)
 
         # find max column widths
-        substitue = len(BOLD + BOLD_OFF) # substitue for invisible characters
+        substitue = len(BOLD + BOLD_OFF) # substitue for invisible characters for highlighting keywords
+        if settings.show_path_for_task_list:
+            substitue2 = len(BOLD + BLUE + RESET) # substitue for invisible characters for highlighting filename if also showing path
+        else:
+            substitue2 = 0
+
+
         max_widths = [0] * 4
         for v in real_values:
             for i in range(len(v)):
                 max_widths[i] = max(max_widths[i], len(v[i]))
+
+        if settings.show_path_for_task_list:
+            max_widths[2] -= substitue2
 
         # clamp to window width
         s = len(spacing)
@@ -114,7 +135,7 @@ def list_tasks():
         for v in real_values:
             taskword = key.color + v[0].ljust(max_widths[0]) + spacing + RESET
             line = v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
-            filename = v[2].ljust(max_widths[2]) + spacing
+            filename = v[2].ljust(max_widths[2] + substitue2) + spacing
             linenumber = v[3].rjust(max_widths[3])
 
             # TODO use python3.6 f-strings
