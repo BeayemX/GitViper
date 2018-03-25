@@ -73,12 +73,22 @@ def list_tasks():
 
             # strip task regardless of capitalization
             idx = linecontent.lower().find(key.value)
-            linecontent = "".join(linecontent.split(linecontent[idx:idx+len(key.value)]))
+            orig_keyword = linecontent[ idx : idx + len(key.value) ]
+            splits = linecontent.split(linecontent[idx:idx+len(key.value)])
+
+            linecontent = ""
+            if idx != 0:
+                linecontent += splits[0]
+            linecontent += BOLD + orig_keyword + BOLD_OFF
+            linecontent += splits[-1] # splits[1] would have to be checked if idx == 0
 
             # strip commenting symbols
+            # """
             linecontent = "".join(linecontent.split("#"))
             linecontent = "".join(linecontent.split("//"))
+            linecontent = "".join(linecontent.split("/*"))
             linecontent = linecontent.strip()
+            # """
 
             # add to data used for creating table
             real_value_entry.append(window_padding + key.representation)
@@ -89,6 +99,7 @@ def list_tasks():
             real_values.append(real_value_entry)
 
         # find max column widths
+        substitue = len(BOLD + BOLD_OFF) # substitue for invisible characters
         max_widths = [0] * 4
         for v in real_values:
             for i in range(len(v)):
@@ -96,7 +107,7 @@ def list_tasks():
 
         # clamp to window width
         s = len(spacing)
-        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding)
+        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitue
         max_widths[1] = availablespace
 
         for v in real_values:
