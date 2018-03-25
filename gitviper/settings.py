@@ -13,7 +13,7 @@ class Settings:
         self.show_all_categories = False
         self.always_show_authors = False
         self.strip_comment_symbols = True
-        self.show_path_for_task_list = True
+        self.show_paths_for_task_list = True
 
 
     def add_task(self, task):

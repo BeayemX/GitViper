@@ -1,5 +1,6 @@
 import os
 import os.path as osp
+import argparse
 
 from gitviper.colors import *
 
@@ -93,7 +94,7 @@ def list_tasks():
             # """
 
             # add to data used for creating table
-            if settings.show_path_for_task_list:
+            if settings.show_paths_for_task_list == args.toggle_paths:
                 path = o.path.replace(os.getcwd(), "") + "/"
                 path = path.lstrip("/")
             else:
@@ -102,7 +103,7 @@ def list_tasks():
             real_value_entry.append(window_padding + key.representation)
             real_value_entry.append(linecontent)
 
-            if settings.show_path_for_task_list:
+            if settings.show_paths_for_task_list == args.toggle_paths:
                 real_value_entry.append(path + BOLD + key.color + o.filename.rjust(0).strip() + RESET)
             else:
                 real_value_entry.append(path + o.filename.rjust(0).strip())
@@ -114,7 +115,8 @@ def list_tasks():
         # find max column widths
         substitutes = [0] * 4 # substitutes for invisible characters
         substitutes[1] = len(BOLD + BOLD_OFF) # for highlighting keywords
-        if settings.show_path_for_task_list:
+
+        if settings.show_paths_for_task_list == args.toggle_paths:
             substitutes[2] = len(BOLD + BLUE + RESET) # for highlighting filename if also showing path
         else:
             substitutes[2] = 0
@@ -125,7 +127,7 @@ def list_tasks():
             for i in range(len(v)):
                 max_widths[i] = max(max_widths[i], len(v[i]))
 
-        if settings.show_path_for_task_list:
+        if settings.show_paths_for_task_list == args.toggle_paths:
             max_widths[2] -= substitutes[2]
 
         # clamp to window width
@@ -151,6 +153,10 @@ def list_tasks():
 
 print(" " + BG_WHITE + BLACK + "  Tasks  " + RESET)
 print()
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-p", "--toggle-paths", action='store_false', help="execute with inverted show-paths property")
+args = parser.parse_args()
 
 try:
     list_tasks()
