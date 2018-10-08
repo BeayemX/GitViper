@@ -51,7 +51,7 @@ def log(max_commit_count):
 			if behind > 0:
 				info_text += " pull(" + str(behind) + ")"
 
-			info_text += BOLD_OFF
+			info_text += RESET # BOLD_OFF
 			info_text += CYAN
 
 		info_text += " ]" + RESET

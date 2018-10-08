@@ -26,9 +26,11 @@ INVERSE 		= "\033[7m"
 CONCEALED 		= "\033[8m"
 STRIKETHROUGH 	= "\033[9m"
 
-BOLD_OFF  		= "\033[21m"
-UNDERLINE_OFF   = "\033[24m"
-INVERSE_OFF     = "\033[27m"
+# use with caution, these may have chagned
+# BOLD_OFF caused double underline...
+# BOLD_OFF  		= "\033[21m"
+# UNDERLINE_OFF   = "\033[24m"
+# INVERSE_OFF     = "\033[27m"
 
 """
 def clear_screen():

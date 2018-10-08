@@ -80,7 +80,7 @@ def list_tasks():
             linecontent = ""
             if idx != 0:
                 linecontent += splits[0]
-            linecontent += BOLD + orig_keyword + BOLD_OFF
+            linecontent += BOLD + orig_keyword + RESET
             linecontent += splits[-1] # splits[1] would have to be checked if idx == 0
 
             # strip commenting symbols
@@ -114,7 +114,7 @@ def list_tasks():
 
         # find max column widths
         substitutes = [0] * 4 # substitutes for invisible characters
-        substitutes[1] = len(BOLD + BOLD_OFF) # for highlighting keywords
+        substitutes[1] = len(BOLD + RESET) # for highlighting keywords
 
         if settings.show_paths_for_task_list == args.toggle_paths:
             substitutes[2] = len(BOLD + BLUE + RESET) # for highlighting filename if also showing path
