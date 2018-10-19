@@ -30,5 +30,7 @@ def get_files():
 	return files
 
 def get_relative_date(time):
-	t = datetime.datetime.fromtimestamp(time)
-	return humanize.naturaltime(t)
+	return humanize.naturaltime(get_date(time))
+
+def get_date(timestamp):
+	return datetime.datetime.fromtimestamp(timestamp)

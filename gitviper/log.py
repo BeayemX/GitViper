@@ -11,6 +11,15 @@ from gitviper.settings import settings as s
 
 spacing = "  "
 
+
+class CommitListEntry:
+	def __init__(self, date, relative_date, author, message):
+		self.date = date
+		self.relative_date = relative_date
+		self.author = author
+		self.message = message
+
+
 def list_logs(num):
 	if show_logs():
 		log(num)
@@ -71,17 +80,18 @@ def log(max_commit_count):
 
 	if not s.always_show_authors:
 		if len(commit_arrays) > 0:
-			initial_author = commit_arrays[0][1]
+			initial_author = commit_arrays[0].author
 			for commit in commit_arrays:
-				if commit[1] != initial_author:
+				if commit.author != initial_author:
 					multi_author = True
 					break
 
 	# calculate table
 	max_col_widths = [0, 0, 0]
 	for commit in commit_arrays:
-		for i in range(len(max_col_widths)):
-			max_col_widths[i] = max(max_col_widths[i], len(commit[i] + spacing))
+		max_col_widths[0] = max(max_col_widths[0], len(commit.relative_date + spacing))
+		max_col_widths[1] = max(max_col_widths[1], len(commit.author + spacing))
+		max_col_widths[2] = max(max_col_widths[2], len(commit.message + spacing))
 
 	# don't show author if all commits are from same author
 	if not multi_author:
@@ -94,13 +104,13 @@ def log(max_commit_count):
 	max_col_widths[2] = msg_length
 
 	for commit in commit_arrays:
-		text = CYAN + commit[0].ljust(max_col_widths[0]) + RESET
+		text = CYAN + commit.relative_date.ljust(max_col_widths[0]) + RESET
 
 		if multi_author:
-			text += GREEN + commit[1].ljust(max_col_widths[1]) + RESET
+			text += GREEN + commit.author.ljust(max_col_widths[1]) + RESET
 
 		# highlight first word of each message
-		msg = commit[2] # [:max_col_widths[2]]
+		msg = commit.message # [:max_col_widths[2]]
 
 		if len(msg) > max_col_widths[2]:
 			msg = msg[:max_col_widths[2]-3] + "..."
@@ -112,7 +122,8 @@ def log(max_commit_count):
 
 def commit_to_string(commit):
 	rel_date = utilities.get_relative_date(commit.committed_date)
+	date = utilities.get_date(commit.committed_date)
 	author = commit.author.name[:s.commit_author_max_length]
 	msg = commit.message.split("\n")[0] # [:msg_length-1]
 
-	return [rel_date, author, msg]
+	return CommitListEntry(date, rel_date, author, msg)
