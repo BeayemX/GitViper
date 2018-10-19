@@ -86,6 +86,15 @@ def log(max_commit_count, max_days_old, separate_commits):
 					multi_author = True
 					break
 
+	# limit all commits to commits newer than max_days_old
+	counter = 0
+	for commit in commit_arrays:
+		if max_days_old > 0:
+			if utilities.is_date_older_than_days(commit.date, max_days_old):
+				break
+		counter += 1
+	commit_arrays = commit_arrays[ 0 : counter ]
+
 	# calculate table
 	max_col_widths = [0, 0, 0]
 	for commit in commit_arrays:
@@ -105,11 +114,6 @@ def log(max_commit_count, max_days_old, separate_commits):
 
 	last_day_age = 0
 	for commit in commit_arrays:
-		# only print commits when maximum of days old
-		if max_days_old > 0:
-			if utilities.is_date_older_than_days(commit.date, max_days_old):
-				break
-
 		# detect new day
 		if separate_commits:
 			if last_day_age != utilities.age_in_days(commit.date):
