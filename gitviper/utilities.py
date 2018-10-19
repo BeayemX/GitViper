@@ -2,7 +2,7 @@ import os
 from os import walk
 from gitviper.settings import settings
 
-import datetime
+from datetime import datetime, timedelta
 import humanize
 
 class Vector2:
@@ -33,4 +33,10 @@ def get_relative_date(time):
 	return humanize.naturaltime(get_date(time))
 
 def get_date(timestamp):
-	return datetime.datetime.fromtimestamp(timestamp)
+	return datetime.fromtimestamp(timestamp)
+
+def is_date_older_than_days(date, days):
+	return date < datetime.now() - timedelta(days=days)
+
+def age_in_days(date):
+	return (datetime.now() - date).days
