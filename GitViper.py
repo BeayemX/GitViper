@@ -27,7 +27,7 @@ parser.add_argument("-ln", "--log-number", type=int, default='5', help="specifiy
 parser.add_argument("-tm", "--show-time", action='store_true', help="show time needed for each category")
 parser.add_argument("-inv", "--show-only", action='store_true', help="only show the given categories instead of hiding them")
 parser.add_argument("-d", "--max-days-old", type=int, default='0', help="specifiy the number of days to consider for the commit log")
-parser.add_argument("-sep", "--separate-commits", action='store_true', help="separate the commit logs by days")
+parser.add_argument("-sep", "--separate-commits", action='store_false', help="separate the commit logs by days")
 
 args = parser.parse_args()
 #pprint(vars(args))
