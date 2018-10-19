@@ -27,6 +27,7 @@ parser.add_argument("-ln", "--log-number", type=int, default='5', help="specifiy
 parser.add_argument("-tm", "--show-time", action='store_true', help="show time needed for each category")
 parser.add_argument("-inv", "--show-only", action='store_true', help="only show the given categories instead of hiding them")
 parser.add_argument("-d", "--max-days-old", type=int, default='0', help="specifiy the number of days to consider for the commit log")
+parser.add_argument("-sep", "--separate-commits", action='store_true', help="separate the commit logs by days")
 
 args = parser.parse_args()
 #pprint(vars(args))
@@ -75,7 +76,7 @@ try:
         if args.hide_branches == args.show_only:
             finalize_category(gitviper.list_branches())
         if args.hide_logs == args.show_only:
-            finalize_category(gitviper.list_logs(args.log_number, args.max_days_old))
+            finalize_category(gitviper.list_logs(args.log_number, args.max_days_old, args.separate_commits))
         if args.hide_stash == args.show_only:
             finalize_category(gitviper.list_stash())
         if args.hide_status == args.show_only:

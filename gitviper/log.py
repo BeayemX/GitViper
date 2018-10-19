@@ -20,9 +20,9 @@ class CommitListEntry:
 		self.message = message
 
 
-def list_logs(num, max_days_old):
+def list_logs(num, max_days_old, separate_commits):
 	if show_logs():
-		log(num, max_days_old)
+		log(num, max_days_old, separate_commits)
 
 		return True
 
@@ -36,7 +36,7 @@ def show_logs():
 
 	return True
 
-def log(max_commit_count, max_days_old):
+def log(max_commit_count, max_days_old, separate_commits):
 	branch = connection.repo.active_branch
 	num_commits = len(list(connection.repo.iter_commits(branch)))
 	commits = list(connection.repo.iter_commits(branch, max_count = max_commit_count))
@@ -111,9 +111,10 @@ def log(max_commit_count, max_days_old):
 				break
 
 		# detect new day
-		if last_day_age != utilities.age_in_days(commit.date):
-			last_day_age = utilities.age_in_days(commit.date)
-			print(CYAN + str("-" * int(w.x)) + RESET)
+		if separate_commits:
+			if last_day_age != utilities.age_in_days(commit.date):
+				last_day_age = utilities.age_in_days(commit.date)
+				print(CYAN + str("-" * int(w.x)) + RESET)
 
 		# actually print commit entries
 		text = CYAN + commit.relative_date.ljust(max_col_widths[0]) + RESET
