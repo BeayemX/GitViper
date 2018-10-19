@@ -39,7 +39,7 @@ def show_logs():
 def log(max_commit_count, max_days_old, separate_commits):
 	branch = connection.repo.active_branch
 	num_commits = len(list(connection.repo.iter_commits(branch)))
-	commits = list(connection.repo.iter_commits(branch, max_count = max_commit_count))
+	commits = list(connection.repo.iter_commits(branch, max_count = max_commit_count)) if max_days_old == 0 else list(connection.repo.iter_commits(branch))
 
 	info_text = ""
 
