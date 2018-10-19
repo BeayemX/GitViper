@@ -118,6 +118,7 @@ def log(max_commit_count, max_days_old, separate_commits):
 
 	# store max needed length for commit before adjusting length for messages
 	max_commit_length = max_col_widths[0] + max_col_widths[1] + max_col_widths[2] - len(spacing)
+	max_commit_length = min(max_commit_length, int(w.x))
 	max_col_widths[2] = msg_length
 
 	last_day_age = 0
