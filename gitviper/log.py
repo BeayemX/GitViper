@@ -99,6 +99,11 @@ def log(max_commit_count, max_days_old, separate_commits):
 			if utilities.is_date_older_than_days(commit.date, max_days_old):
 				break
 		counter += 1
+
+	if counter == 0:
+		print(" < No commits for the last " + str(max_days_old) + " days >")
+		return
+
 	commit_arrays = commit_arrays[ 0 : counter ]
 
 	# calculate table
