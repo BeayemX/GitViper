@@ -126,13 +126,13 @@ def log(max_commit_count, max_days_old, separate_commits):
 	max_commit_length = min(max_commit_length, int(w.x))
 	max_col_widths[2] = msg_length
 
-	last_day_age = utilities.age_in_days(commit_arrays[0].date)
+	last_displayed_date = commit_arrays[0].relative_date
 
 	for commit in commit_arrays:
 		# detect new day
 		if separate_commits:
-			if last_day_age != utilities.age_in_days(commit.date):
-				last_day_age = utilities.age_in_days(commit.date)
+			if last_displayed_date != commit.relative_date:
+				last_displayed_date = commit.relative_date
 				print(CYAN + "-" * max_commit_length + RESET)
 
 		# actually print commit entries
