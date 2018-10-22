@@ -130,7 +130,7 @@ def log(max_commit_count, max_days_old, separate_commits):
 
 	for commit in commit_arrays:
 		# detect new day
-		if separate_commits:
+		if separate_commits and utilities.age_in_days(commit.date) > 0:
 			if last_displayed_date != commit.relative_date:
 				last_displayed_date = commit.relative_date
 				print(CYAN + "-" * max_commit_length + RESET)

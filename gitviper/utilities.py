@@ -38,6 +38,5 @@ def get_date(timestamp):
 def is_date_older_than_days(date, days):
 	return date < datetime.now() - timedelta(days=days)
 
-# legacy, not used any more
 def age_in_days(date):
 	return (datetime.now() - date).days
