@@ -42,3 +42,32 @@ def clear_line():
 def move_cursor_up(rows=1):
 	print("\033["+ str(rows) +"A", sep=' ', end='', flush=True)
 """
+def string_to_color(color_as_string):
+	if color_as_string == None:
+		return None
+	return _get_color_from_string(color_as_string.lower())
+
+def _get_color_from_string(color_as_string):
+	# TODO use dictionary to return color?
+	# i.e. `return color_dict[color_as_string]`
+	if color_as_string == "black": return BLACK
+	if color_as_string == "white": return WHITE
+	if color_as_string == "red": return RED
+	if color_as_string == "green": return GREEN
+	if color_as_string == "blue": return BLUE
+	if color_as_string == "yellow": return YELLOW
+	if color_as_string == "magenta": return MAGENTA
+	if color_as_string == "cyan": return CYAN
+
+	if color_as_string == "bg_black": return BG_BLACK
+	if color_as_string == "bg_white": return BG_WHITE
+	if color_as_string == "bg_red": return BG_RED
+	if color_as_string == "bg_green": return BG_GREEN
+	if color_as_string == "bg_blue": return BG_BLUE
+	if color_as_string == "bg_yellow": return BG_YELLOW
+	if color_as_string == "bg_magenta": return BG_MAGENTA
+	if color_as_string == "bg_cyan": return BG_CYAN
+
+	if color_as_string == "bold": return BOLD
+
+	return None
