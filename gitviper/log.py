@@ -155,7 +155,11 @@ def log(max_commit_count, max_days_old, separate_commits):
 def commit_to_string(commit):
 	rel_date = utilities.get_relative_date(commit.committed_date)
 	date = utilities.get_date(commit.committed_date)
-	author = commit.author.name[:s.commit_author_max_length]
+	if s.commit_author_max_length > 0:
+		author = commit.author.name[:s.commit_author_max_length]
+	else:
+		author = commit.author.name
+
 	msg = commit.message.split("\n")[0] # [:msg_length-1]
 
 	return CommitListEntry(date, rel_date, author, msg)

@@ -10,12 +10,11 @@ class Settings:
         self.excluded_directories = [".git"]
         self.excluded_files = []
 
-        self.commit_author_max_length = 20
+        self.commit_author_max_length = 0
         self.show_all_categories = True
-        self.always_show_authors = False
+        self.always_show_authors = True
         self.strip_comment_symbols = True
         self.show_paths_for_task_list = True
-
 
     def add_task(self, task):
         def get_key(task):
@@ -84,6 +83,23 @@ def load_keywords_from_config_file(dir_path):
         else:
             settings.remove_task(section)
 
+def _load_settings(dir_path):
+    full_path = dir_path + "/.gitviper/config"
+
+    if not os.path.isfile(full_path):
+        return
+
+    config = configparser.ConfigParser()
+    config.read(full_path)
+
+    val = config["Log Settings"].getboolean("always-show-author")
+    if val != None:
+        settings.always_show_authors =  val
+
+    val = config["Log Settings"].getint("commit-author-max-length")
+    if val:
+        settings.commit_author_max_length = int(val)
+
 # actual execution
 settings = Settings()
 
@@ -93,6 +109,7 @@ project_dir = os.getcwd()
 directories = [home_dir, project_dir]
 
 for directory in directories:
+    _load_settings(directory)
     load_keywords_from_config_file(directory)
     load_excluded_directories(directory)
     load_excluded_files(directory)
