@@ -1,4 +1,5 @@
 import os.path
+import configparser
 
 from gitviper.task import Task
 from gitviper.colors import *
@@ -10,7 +11,7 @@ class Settings:
         self.excluded_files = []
 
         self.commit_author_max_length = 20
-        self.show_all_categories = False
+        self.show_all_categories = True
         self.always_show_authors = False
         self.strip_comment_symbols = True
         self.show_paths_for_task_list = True
@@ -19,8 +20,19 @@ class Settings:
     def add_task(self, task):
         def get_key(task):
             return task.priority
+
+        # TODO use dict to be able to directly access task with similar representation?
+        # would avoid iterating over all tasks
+        self.remove_task(task.representation)
+
         self.tasks.append(task)
         self.tasks = sorted(self.tasks, key=get_key, reverse=True)
+
+    def remove_task(self, task_representation):
+        for task_entry in self.tasks:
+            if task_entry.representation == task_representation:
+                self.tasks.remove(task_entry)
+                return
 
     def add_excluded_directory(self, new_dir):
         self.excluded_directories.append(new_dir)
@@ -29,36 +41,58 @@ class Settings:
         self.excluded_files.append(new_file)
 
 
-# add settings
-settings = Settings()
+def _call_function_with_every_line_in_file(function, dir_path, file_name):
+    full_path = dir_path + "/.gitviper/" + file_name
+    if not os.path.isfile(full_path):
+        return
 
-# add tasks
-settings.add_task(Task("todo", "Todo", GREEN, BG_GREEN, 5))
-settings.add_task(Task("fixme", "FixMe", RED, BG_RED, 10))
-settings.add_task(Task("hack", "Hack", YELLOW, BG_YELLOW, 7))
+    with open(full_path) as file:
+        for line in file:
+            line = line.rstrip('\n')
+            if line != '':
+                function(line)
 
-settings.add_task(Task("xxx", "XXX", CYAN, BG_CYAN, 0))
+def load_excluded_files(dir_path):
+    _call_function_with_every_line_in_file(settings.add_excluded_file, dir_path, "excluded_files")
 
-settings.add_task(Task("asdf", "asdf", CYAN, BG_CYAN, 2))
-settings.add_task(Task("wip", "WIP", CYAN, BG_CYAN, 4))
-
-# task with a priority below 1 will be displayed in a second line
-# settings.add_task(Task("print", "print", BLUE, BG_BLUE, -2))
-# settings.add_task(Task("log", "Log", BLUE, BG_BLUE, -1))
-
-# add excluded directories
-settings.add_excluded_directory(".git")
-
-# add excluded file
-settings.add_excluded_file("settings.py")
-settings.add_excluded_file(".sh")
-settings.add_excluded_file(".svg")
-settings.add_excluded_file(".tga")
-settings.add_excluded_file("readme")
+def load_excluded_directories(dir_path):
+    _call_function_with_every_line_in_file(settings.add_excluded_directory, dir_path, "excluded_directories")
 
 # load additional settings
-try:
-    import gitviper.additional_settings as add_sett
-    add_sett.load_additional_settings(settings)
-except ImportError:
-    pass
+def load_keywords_from_config_file(dir_path):
+    full_path = dir_path + "/.gitviper/keywords"
+
+    if not os.path.isfile(full_path):
+        return
+
+    config = configparser.ConfigParser(allow_no_value = True)
+    config.read(full_path)
+
+    for section in config.sections():
+        sec = config[section]
+        try:
+            sec["disabled"] # can be used to override global keywords to avoid for specific projects
+        except KeyError: # HACK using expected exception for logical flow!?!
+            settings.add_task(Task(
+                section,
+                sec.get("key"),
+                sec.get("color"),
+                sec.getint("priority"),
+                sec.get("font color"),
+                sec.getboolean("bold")
+            ))
+        else:
+            settings.remove_task(section)
+
+# actual execution
+settings = Settings()
+
+from pathlib import Path
+home_dir = str(Path.home())
+project_dir = os.getcwd()
+directories = [home_dir, project_dir]
+
+for directory in directories:
+    load_keywords_from_config_file(directory)
+    load_excluded_directories(directory)
+    load_excluded_files(directory)
