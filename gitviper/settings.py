@@ -10,9 +10,11 @@ class Settings:
         self.excluded_directories = [".git"]
         self.excluded_files = []
 
-        self.commit_author_max_length = 0
         self.show_all_categories = True
+
+        self.commit_author_max_length = 0
         self.always_show_authors = True
+
         self.strip_comment_symbols = True
         self.show_paths_for_task_list = True
 
@@ -92,13 +94,24 @@ def _load_settings(dir_path):
     config = configparser.ConfigParser()
     config.read(full_path)
 
+    # Commit Log Settings
     val = config["Log Settings"].getboolean("always-show-author")
     if val != None:
         settings.always_show_authors =  val
 
     val = config["Log Settings"].getint("commit-author-max-length")
     if val:
-        settings.commit_author_max_length = int(val)
+        settings.commit_author_max_length = val
+
+    # Task View Settings
+    val = config["Task View"].getboolean("show-path")
+    if val != None:
+        settings.show_paths_for_task_list = val
+
+    val = config["Task View"].getboolean("strip-comment-symbols")
+    if val != None:
+        settings.strip_comment_symbols = val
+
 
 # actual execution
 settings = Settings()
