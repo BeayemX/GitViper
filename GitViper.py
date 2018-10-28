@@ -24,7 +24,7 @@ default_values = {
     "logs" : True,
     "time" : False,
     "separate_commits" : False,
-    "line_number" : 3,
+    "line_number" : 5,
     "max_days" : 0
 }
 
@@ -91,9 +91,9 @@ parser.add_argument("-b", "--hide-branches", action=action("branches"), help="hi
 parser.add_argument("-s", "--hide-status", action=action("status"), help="hide the status category")
 parser.add_argument("-st", "--hide-stash", action=action("stash"), help="hide the stash category")
 parser.add_argument("-l", "--hide-logs", action=action("logs"), help="hide the commit logs category")
-parser.add_argument("-ln", "--log-number", type=int, default='5', help="specifiy the number of logs that will be shown")
+parser.add_argument("-ln", "--log-number", type=int, default=default_values["line_number"], help="specifiy the number of logs that will be shown")
 parser.add_argument("-tm", "--show-time", action=action("time", "flip"), help="show time needed for each category")
-parser.add_argument("-d", "--max-days-old", type=int, default='0', help="specifiy the number of days to consider for the commit log")
+parser.add_argument("-d", "--max-days-old", type=int, default=default_values["max_days"], help="specifiy the number of days to consider for the commit log")
 parser.add_argument("-sep", "--separate-commits", action=action("separate_commits", "flip"), help="separate the commit logs by days")
 
 # only cli args, not in the config file
