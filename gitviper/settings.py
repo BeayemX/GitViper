@@ -53,14 +53,14 @@ def _call_function_with_every_line_in_file(function, dir_path, file_name):
             if line != '':
                 function(line)
 
-def load_excluded_files(dir_path):
+def _load_excluded_files(dir_path):
     _call_function_with_every_line_in_file(settings.add_excluded_file, dir_path, "excluded_files")
 
-def load_excluded_directories(dir_path):
+def _load_excluded_directories(dir_path):
     _call_function_with_every_line_in_file(settings.add_excluded_directory, dir_path, "excluded_directories")
 
 # load additional settings
-def load_keywords_from_config_file(dir_path):
+def _load_keywords_from_config_file(dir_path):
     full_path = dir_path + "/.gitviper/keywords"
 
     if not os.path.isfile(full_path):
@@ -123,6 +123,6 @@ directories = [home_dir, project_dir]
 
 for directory in directories:
     _load_settings(directory)
-    load_keywords_from_config_file(directory)
-    load_excluded_directories(directory)
-    load_excluded_files(directory)
+    _load_keywords_from_config_file(directory)
+    _load_excluded_directories(directory)
+    _load_excluded_files(directory)
