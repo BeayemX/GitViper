@@ -95,22 +95,32 @@ def _load_settings(dir_path):
     config.read(full_path)
 
     # Commit Log Settings
-    val = config["Log Settings"].getboolean("always-show-author")
-    if val != None:
-        settings.always_show_authors =  val
+    try:
+        log_section = config["Log Settings"]
+    except KeyError:
+        pass
+    else:
+        val = log_section.getboolean("always-show-author")
+        if val != None:
+            settings.always_show_authors =  val
 
-    val = config["Log Settings"].getint("commit-author-max-length")
-    if val:
-        settings.commit_author_max_length = val
+        val = log_section.getint("commit-author-max-length")
+        if val:
+            settings.commit_author_max_length = val
 
     # Task View Settings
-    val = config["Task View"].getboolean("show-path")
-    if val != None:
-        settings.show_paths_for_task_list = val
+    try:
+        task_view_section = config["Task View"]
+    except KeyError:
+        pass
+    else:
+        val = task_view_section.getboolean("show-path")
+        if val != None:
+            settings.show_paths_for_task_list = val
 
-    val = config["Task View"].getboolean("strip-comment-symbols")
-    if val != None:
-        settings.strip_comment_symbols = val
+        val = task_view_section.getboolean("strip-comment-symbols")
+        if val != None:
+            settings.strip_comment_symbols = val
 
 
 # actual execution
