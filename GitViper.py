@@ -1,3 +1,4 @@
+import os
 import argparse
 import configparser
 from pprint import pprint
@@ -12,7 +13,14 @@ import time
 # module variables
 label = "GitViper"
 version = "v0.1.6"
-branch = "beta"
+branch = ""
+
+path = os.path.dirname(os.path.realpath(__file__))
+with open(path + '/.git/HEAD', 'r') as myfile:
+    branch = myfile.readline().rstrip().rsplit("/")[-1]
+    if branch == "master":
+        branch = ""
+
 
 # load default values for cli arguments
 default_values = {
@@ -107,6 +115,8 @@ args = parser.parse_args()
 # print GitViper label
 window_width = gitviper.utilities.get_window_size().x
 text = label + " " + version + "-" + branch
+if text[-1] == "-":
+    text = text[0 : -1]
 text = text.rjust(int(window_width))
 print(text)
 
