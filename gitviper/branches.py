@@ -37,7 +37,7 @@ def should_show_branches():
     if len(connection.repo.branches) > 1:
         return True
 
-    return settings.show_all_categories
+    return False
 
 def _list_all_branches():
     _list_remote_branches()

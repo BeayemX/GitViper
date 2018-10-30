@@ -10,8 +10,6 @@ class Settings:
         self.excluded_directories = [".git"]
         self.excluded_files = []
 
-        self.show_all_categories = True
-
         self.commit_author_max_length = 0
         self.always_show_authors = True
 
