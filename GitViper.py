@@ -14,12 +14,13 @@ import time
 label = "GitViper"
 version = "v0.1.6"
 branch = ""
-
 path = os.path.dirname(os.path.realpath(__file__))
-with open(path + '/.git/HEAD', 'r') as myfile:
-    branch = myfile.readline().rstrip().rsplit("/")[-1]
-    if branch == "master":
-        branch = ""
+fullpath = path + '/.git/HEAD'
+if os.path.isfile(fullpath):
+    with open(fullpath, 'r') as myfile:
+        branch = myfile.readline().rstrip().rsplit("/")[-1]
+        if branch == "master":
+            branch = ""
 
 
 # load default values for cli arguments
