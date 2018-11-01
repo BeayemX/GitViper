@@ -21,26 +21,47 @@ gitviper_path = os.path.dirname(os.path.realpath(__file__))
 
 
 import sys
-if len(sys.argv) > 1 and sys.argv[1] == "init":
-    if not os.path.isdir(project_dir + "/.git"):
-        print("This is not a git repository!")
+if len(sys.argv) > 1:
+    if sys.argv[1] == "init":
+        if not os.path.isdir(project_dir + "/.git"):
+            print("This is not a git repository!")
+            exit()
+
+        if not os.path.isdir(project_dir + "/.gitviper"):
+            os.makedirs(project_dir + "/.gitviper")
+            print("Initialized GitViper.")
+        else:
+            print("Reinitialized GitViper.")
+
+        # copy template files
+        from shutil import copyfile
+        template_path = gitviper_path + "/templates"
+        local_template_path = project_dir + "/.gitviper"
+
+        for item in os.listdir(template_path):
+            copyfile(template_path + "/" + item, local_template_path + "/" + item)
         exit()
 
-    if not os.path.isdir(project_dir + "/.gitviper"):
-        os.makedirs(project_dir + "/.gitviper")
-        print("Initialized GitViper.")
     else:
-        print("Reinitialized GitViper.")
+        sys_argv_has_been_handled = True
 
-    # copy template files
-    from shutil import copyfile
-    template_path = gitviper_path + "/templates"
-    local_template_path = project_dir + "/.gitviper"
+        gitconnector.connect()
+        if sys.argv[1] == "status":
+            gitviper.list_status()
+        elif sys.argv[1] == "stash":
+            gitviper.list_stash()
+        elif sys.argv[1] == "log":
+            if len(sys.argv) < 3:
+                gitviper.list_logs(-1, 0, True)
+            else:
+                gitviper.list_logs(sys.argv[2], 0, True)
+        elif sys.argv[1] == "branch" or sys.argv[1] == "branches":
+            gitviper.list_branches(True)
+        else:
+            sys_argv_has_been_handled = False
 
-    for item in os.listdir(template_path):
-        copyfile(template_path + "/" + item, local_template_path + "/" + item)
-
-    exit()
+        if sys_argv_has_been_handled:
+            exit()
 
 # module variables
 label = "GitViper"

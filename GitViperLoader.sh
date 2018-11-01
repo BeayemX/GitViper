@@ -20,11 +20,10 @@ alias d="gvclear && git diff"
 alias ds="d --staged"
 
 # logs
-alias log="gitviper -t -b -s -st -ln -1 | gvless"
-alias log2="git log --stat --date=relative"
+# alias log="gitviper log | gvless"
+function log() { gitviper log "$@" | gvless; }
 alias graph='git log --graph --oneline --decorate --all'
-alias gt="g --since='6am'"
-alias gg="git log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h %C(reset)%C(red)(%ar)%C(reset) %C(dim white)%an%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)' --all"
+alias gt="graph --since='6am'"
 
 # git function calls without git prefix
 function checkout() { gvclear; git checkout "$@"; gitviper; }

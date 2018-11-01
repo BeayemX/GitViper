@@ -10,8 +10,8 @@ from gitviper.settings import settings
 spacing = "  "
 branches_indentation = "   "
 
-def list_branches():
-    if should_show_branches():
+def list_branches(force_show = False):
+    if force_show or should_show_branches():
         gui.print_header("Branches", BG_MAGENTA)
 
         try:
