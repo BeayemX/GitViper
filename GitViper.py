@@ -10,8 +10,6 @@ from gitviper.gitconnector import connection
 from gitviper.colors import *
 import time
 
-DEBUG = False
-
 # module variables
 label = "GitViper"
 version = "v0.1.6"
@@ -99,6 +97,7 @@ parser.add_argument("-ln", "--log-number", type=int, default=0, help="specifiy t
 parser.add_argument("-tm", "--time", action="store_true", help="show time needed for each category")
 parser.add_argument("-d", "--max-days-old", type=int, default=0, help="specifiy the number of days to consider for the commit log")
 parser.add_argument("-sep", "--separate-commits", action="store_true", help="separate the commit logs by days")
+parser.add_argument("--debug", action="store_true", help="show debug logs")
 
 parser.add_argument("-inv", "--invert", action='store_true', help="only show the given categories instead of hiding them")
 
@@ -135,7 +134,7 @@ for key in cli_arg_values:
 
 
 # # # print values
-if DEBUG:
+if args.debug:
     print("key".ljust(16), "default", "cli-ar", "conf", "final", sep="\t")
     print()
     for key in default_values:
