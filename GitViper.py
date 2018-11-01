@@ -88,7 +88,7 @@ for directory in directories:
     load_defaults(directory)
 
 # command line arguments
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="This will show all values that can be toggled. The initial value is gathered from the configuration file(s). The default values are used if there are no files provided.")
 parser.add_argument("-ig", "--ignore-conf", action="store_true", help="ignore all configuration files and use the default values")
 parser.add_argument("-t", "--tasks", action="store_true", help="hide the tasks category")
 parser.add_argument("-b", "--branches", action="store_true", help="hide the branches category")
