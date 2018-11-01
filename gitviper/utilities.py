@@ -18,11 +18,11 @@ def get_files():
 	files = []
 
 	for (dirpath, dirnames, filenames) in walk(os.getcwd()):
-		dirnames[:] = [d for d in dirnames if d not in settings.excluded_directories]
+		dirnames[:] = [d for d in dirnames if d not in settings.ignored_directories]
 
 		# TODO use generator?
 		for f in filenames:
-			for exf in settings.excluded_files:
+			for exf in settings.ignored_files:
 				if exf.lower() in f.lower():
 					break
 			else:

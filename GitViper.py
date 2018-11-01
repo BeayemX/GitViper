@@ -10,14 +10,45 @@ from gitviper.gitconnector import connection
 from gitviper.colors import *
 import time
 
+
+from pathlib import Path
+import os
+
+home_dir = str(Path.home())
+project_dir = os.getcwd()
+directories = [home_dir, project_dir]
+gitviper_path = os.path.dirname(os.path.realpath(__file__))
+
+
+import sys
+if len(sys.argv) > 1 and sys.argv[1] == "init":
+    if not os.path.isdir(project_dir + "/.git"):
+        print("This is not a git repository!")
+        exit()
+
+    if not os.path.isdir(project_dir + "/.gitviper"):
+        os.makedirs(project_dir + "/.gitviper")
+        print("Initialized GitViper.")
+    else:
+        print("Reinitialized GitViper.")
+
+    # copy template files
+    from shutil import copyfile
+    template_path = gitviper_path + "/templates"
+    local_template_path = project_dir + "/.gitviper"
+
+    for item in os.listdir(template_path):
+        copyfile(template_path + "/" + item, local_template_path + "/" + item)
+
+    exit()
+
 # module variables
 label = "GitViper"
 version = "v0.1.6"
 branch = ""
-path = os.path.dirname(os.path.realpath(__file__))
-fullpath = path + '/.git/HEAD'
-if os.path.isfile(fullpath):
-    with open(fullpath, 'r') as myfile:
+branch_path = gitviper_path + '/.git/HEAD'
+if os.path.isfile(branch_path):
+    with open(branch_path, 'r') as myfile:
         branch = myfile.readline().rstrip().rsplit("/")[-1]
         if branch == "master":
             branch = ""
@@ -74,13 +105,6 @@ def load_defaults(dir_path):
     except KeyError:
         pass
 
-
-
-from pathlib import Path
-import os
-home_dir = str(Path.home())
-project_dir = os.getcwd()
-directories = [home_dir, project_dir]
 
 for directory in directories:
     load_defaults(directory)
@@ -139,6 +163,8 @@ if args.debug:
     print()
     for key in default_values:
         print(key.ljust(16), default_values[key], cli_arg_values[key], conf_values[key], final_values[key], sep="\t")
+
+
 
 
 # Execute main program

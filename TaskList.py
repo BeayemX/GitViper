@@ -114,7 +114,7 @@ def list_tasks():
 
         # find max column widths
         substitutes = [0] * 4 # substitutes for invisible characters
-        substitutes[1] = len(BOLD + RESET) # for highlighting keywords
+        substitutes[1] = len(BOLD + RESET) # for highlighting tasks
 
         if settings.show_paths_for_task_list == args.toggle_paths:
             substitutes[2] = len(BOLD + BLUE + RESET) # for highlighting filename if also showing path

@@ -1,0 +1,23 @@
+[Display Settings]
+
+show-tasks = true
+show-branches = true
+show-logs = true
+show-stash = true
+show-status = true
+
+show-time = false
+
+
+[Log Settings]
+log-number = 5
+# log-days = 1
+show-separator = false
+
+always-show-author = false
+commit-author-max-length = 0
+
+
+[Task View]
+show-path = true
+strip-comment-symbols = true

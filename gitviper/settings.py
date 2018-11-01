@@ -7,8 +7,8 @@ from gitviper.colors import *
 class Settings:
     def __init__(self):
         self.tasks = []
-        self.excluded_directories = [".git"]
-        self.excluded_files = []
+        self.ignored_directories = []
+        self.ignored_files = []
 
         self.commit_author_max_length = 0
         self.always_show_authors = True
@@ -33,11 +33,11 @@ class Settings:
                 self.tasks.remove(task_entry)
                 return
 
-    def add_excluded_directory(self, new_dir):
-        self.excluded_directories.append(new_dir)
+    def add_ignored_directory(self, new_dir):
+        self.ignored_directories.append(new_dir)
 
-    def add_excluded_file(self, new_file):
-        self.excluded_files.append(new_file)
+    def add_ignored_file(self, new_file):
+        self.ignored_files.append(new_file)
 
 
 def _call_function_with_every_line_in_file(function, dir_path, file_name):
@@ -51,15 +51,15 @@ def _call_function_with_every_line_in_file(function, dir_path, file_name):
             if line != '':
                 function(line)
 
-def _load_excluded_files(dir_path):
-    _call_function_with_every_line_in_file(settings.add_excluded_file, dir_path, "excluded_files")
+def _load_ignored_files(dir_path):
+    _call_function_with_every_line_in_file(settings.add_ignored_file, dir_path, "ignored_files")
 
-def _load_excluded_directories(dir_path):
-    _call_function_with_every_line_in_file(settings.add_excluded_directory, dir_path, "excluded_directories")
+def _load_ignored_directories(dir_path):
+    _call_function_with_every_line_in_file(settings.add_ignored_directory, dir_path, "ignored_directories")
 
 # load additional settings
-def _load_keywords_from_config_file(dir_path):
-    full_path = dir_path + "/.gitviper/keywords"
+def _load_tasks_from_config_file(dir_path):
+    full_path = dir_path + "/.gitviper/tasks"
 
     if not os.path.isfile(full_path):
         return
@@ -70,7 +70,7 @@ def _load_keywords_from_config_file(dir_path):
     for section in config.sections():
         sec = config[section]
         try:
-            sec["disabled"] # can be used to override global keywords to avoid for specific projects
+            sec["disabled"] # can be used to override global tasks to avoid for specific projects
         except KeyError: # HACK using expected exception for logical flow!?!
             settings.add_task(Task(
                 section,
@@ -131,6 +131,6 @@ directories = [home_dir, project_dir]
 
 for directory in directories:
     _load_settings(directory)
-    _load_keywords_from_config_file(directory)
-    _load_excluded_directories(directory)
-    _load_excluded_files(directory)
+    _load_tasks_from_config_file(directory)
+    _load_ignored_directories(directory)
+    _load_ignored_files(directory)

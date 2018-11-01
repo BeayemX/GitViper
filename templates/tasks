@@ -1,0 +1,14 @@
+# the section header will be used as the text for the tags
+[To-Do]
+# the string to search for. if key is not provided, the header (in lower-case) will be used
+key = todo
+# this color will be used as background color when listing tasks as tags and as font color when listing tasks
+color = yellow
+# display font in bold in tags
+bold=true
+# the font color used for tags
+font color = black
+# tags will be sorted by priority. priorities below 1 will be displayed in a second line
+priority = 1
+# 'disabled' can be used to ignore certain tasks defined in your home directory
+# disabled
