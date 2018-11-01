@@ -10,6 +10,7 @@ function gvless() { less --raw-control-chars --quit-if-one-screen --no-init; }
 function gvclear() { tput reset; }
 
 alias q='gvclear'
+alias gv='gitviper'
 
 # git shortcuts
 alias s="gvclear && gitviper"

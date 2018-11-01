@@ -47,20 +47,28 @@ if len(sys.argv) > 1:
 
         gitconnector.connect()
         if sys.argv[1] == "status":
+            print()
             gitviper.list_status()
         elif sys.argv[1] == "stash":
+            print()
             gitviper.list_stash()
         elif sys.argv[1] == "log":
+            print()
             if len(sys.argv) < 3:
                 gitviper.list_logs(-1, 0, True)
             else:
                 gitviper.list_logs(sys.argv[2], 0, True)
         elif sys.argv[1] == "branch" or sys.argv[1] == "branches":
+            print()
             gitviper.list_branches(True)
+        elif sys.argv[1] == "tasks" or sys.argv[1] == "todo":
+            print()
+            gitviper.list_tasks()
         else:
             sys_argv_has_been_handled = False
 
         if sys_argv_has_been_handled:
+            print()
             exit()
 
 # module variables
