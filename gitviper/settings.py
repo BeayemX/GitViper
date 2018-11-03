@@ -33,6 +33,9 @@ class Settings:
                 self.tasks.remove(task_entry)
                 return
 
+    def clear_tasks(self):
+        self.tasks = [] # will not update references made to 'settings.tasks'
+
     def add_ignored_directory(self, new_dir):
         self.ignored_directories.append(new_dir)
 

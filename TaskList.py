@@ -7,8 +7,6 @@ from gitviper.colors import *
 import gitviper.utilities as utils
 from gitviper.settings import settings
 
-tasks = settings.tasks
-
 occurences_dict = {}
 spacing = "   "
 window_padding = " "
@@ -37,15 +35,24 @@ def fill_dictionary(task, file):
             occ = Occurence(file[0], file[1], o[0], o[1])
             occurences_dict[task].append(occ)
 
-def list_tasks():
-    for k in tasks:
+def list_tasks(cli_tasks):
+    # TODO should avoid adding unused Tasks in the first place instead of adding them and then clearing the list
+    if args.ignore_conf:
+        settings.clear_tasks()
+
+    if cli_tasks != None:
+        from gitviper.task import Task
+        for cli_task in cli_tasks:
+            settings.add_task(Task(cli_task, None, None, None, None, None))
+
+    for k in settings.tasks:
         occurences_dict[k] = []
 
     # get files as list
     files = utils.get_files()
 
     # fill dictionary
-    for task in tasks:
+    for task in settings.tasks:
         for f in files:
             fill_dictionary(task, f)
 
@@ -156,10 +163,13 @@ print()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--toggle-paths", action='store_false', help="execute with inverted show-paths property")
+parser.add_argument("-a", "--additional-tasks", nargs="*")
+parser.add_argument("-i", "--ignore-conf", action="store_true")
+
 args = parser.parse_args()
 
 try:
-    list_tasks()
+    list_tasks(args.additional_tasks)
 except KeyboardInterrupt:
     print(BG_RED + WHITE + " Execution canceled... " + RESET)
 except BrokenPipeError: # occurs sometimes after quitting less when big git-logs are displayed
