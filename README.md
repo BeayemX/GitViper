@@ -35,6 +35,15 @@ on Linux Mint or something similar on other distros.
 
 ## How to use GitViper
 There are two python files you can use. `GitViper.py` is used to display the mainview for the current repository. Your current working directory has to be the root level of a git repsitory.
+If you want to show only one section there are several commands you can use
+```
+gitviper tasks # equivalent to 'gitviper task'
+gitviper branch # equivalent to 'gitviper branches'
+gitviper log
+gitviper status
+gitviper stash
+```
+
 The second file is `TaskList.py` which is used to list all occurences of task-keywords.
 
 For convenience's sake there is also `GitViperLoader.sh` which can be used to add aliases for these two files to your bash environment by running 
