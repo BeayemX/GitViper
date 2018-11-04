@@ -3,7 +3,7 @@ GITVIPER_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # actual GitViper scripts
 alias gitviper='python3 ${GITVIPER_DIRECTORY}/GitViper.py'
-function todo() { gvclear; python3 "${GITVIPER_DIRECTORY}/TaskList.py" "$@" | gvless; }
+function taskview() { python3 "${GITVIPER_DIRECTORY}/TaskList.py" "$@" | gvless; }
 
 # utility functions
 function gvless() { less --raw-control-chars --quit-if-one-screen --no-init; }
@@ -19,6 +19,9 @@ alias a="gitviper_add"
 alias a.="gitviper_add_all"
 alias d="gvclear && git diff"
 alias ds="d --staged"
+
+# TaskView shortcuts
+alias todo='gvclear && taskview'
 
 # logs
 # alias log="gitviper log | gvless"
