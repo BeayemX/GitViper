@@ -57,7 +57,7 @@ def count_tasks(filename, counter_dict):
 		try:
 			for line in myfile: 
 				for task in s.tasks:
-					if line.lower().count(task.value.lower()):
+					if task.value.lower() in line.lower():
 						counter_dict[task.value] += 1
 
 		except UnicodeDecodeError:
