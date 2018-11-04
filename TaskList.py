@@ -87,18 +87,17 @@ def list_tasks(cli_tasks):
             linecontent = ""
             if idx != 0:
                 linecontent += splits[0]
-            linecontent += BOLD + orig_keyword + RESET
+
+            linecontent += key.color + orig_keyword + RESET
             linecontent += splits[-1] # splits[1] would have to be checked if idx == 0
 
             # strip commenting symbols
-            # """
             if settings.strip_comment_symbols:
                 linecontent = linecontent.replace("#", "")
                 linecontent = linecontent.replace("//", "")
                 linecontent = linecontent.replace("/*", "")
                 linecontent = linecontent.replace("\t", " ")
                 linecontent = linecontent.strip()
-            # """
 
             # add to data used for creating table
             if settings.show_paths_for_task_list == args.toggle_paths:
@@ -121,7 +120,7 @@ def list_tasks(cli_tasks):
 
         # find max column widths
         substitutes = [0] * 4 # substitutes for invisible characters
-        substitutes[1] = len(BOLD + RESET) # for highlighting tasks
+        substitutes[1] = len(BOLD + RESET) # for highlighting tasks # FIXME adjust to new format, individual color per Task?
 
         if settings.show_paths_for_task_list == args.toggle_paths:
             substitutes[2] = len(BOLD + BLUE + RESET) # for highlighting filename if also showing path
@@ -137,16 +136,23 @@ def list_tasks(cli_tasks):
         if settings.show_paths_for_task_list == args.toggle_paths:
             max_widths[2] -= substitutes[2]
 
+        line_beginning_spacing = "  "
+        max_widths[0] = len(line_beginning_spacing)
+
         # clamp to window width
         s = len(spacing)
-        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitutes[1]
+        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitutes[1] + s + 2 # the last ' + s + 2' is for setting [0] to 'line_beginning_spacing' and add whitespace to the right side
         max_widths[1] = availablespace
+
+        print(key.color + BOLD + v[0] + " " + RESET)
+        print()
 
         for v in real_values:
             if len(v[1]) > max_widths[1]:
                 v[1] = v[1][:max_widths[1]-3] + "..."
-
-            taskword = key.color + v[0].ljust(max_widths[0]) + spacing + RESET
+            # TODO remove v[0] and max_width[0] because they are not used any more
+            # taskword = key.color + v[0].ljust(max_widths[0]) + spacing + RESET # legacy
+            taskword = line_beginning_spacing
             line = v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
             filename = v[2].ljust(max_widths[2] + substitutes[2]) + spacing
             linenumber = v[3].rjust(max_widths[3])
