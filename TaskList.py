@@ -144,7 +144,7 @@ def list_tasks(cli_tasks):
         availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitutes[1] + s + 2 # the last ' + s + 2' is for setting [0] to 'line_beginning_spacing' and add whitespace to the right side
         max_widths[1] = availablespace
 
-        print(key.color + BOLD + v[0] + " " + RESET)
+        print(key.color + BOLD + v[0] + " [" + str(len(real_values)) + "]" + RESET)
         print()
 
         for v in real_values:
