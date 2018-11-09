@@ -19,6 +19,13 @@ class Occurence:
         self.linenumber = linenumber
         self.linecontent = linecontent
 
+class TaskListLineEntry():
+    def __init__(self, linecontent = "", path = "", linenumber = ""):
+        self.linecontent = linecontent
+        self.path = path
+        self.linenumber = linenumber
+
+
 def fill_dictionary(task, file):
     occurences = []
     fullpath = osp.join(file[0], file[1])
@@ -56,7 +63,8 @@ def split_stream(occurence, task): # TODO rename
     stream_split = stream.lower().split(key.lower())
 
     for s in stream_split:
-        real_value_entry = []
+        task_list_line_entry = TaskListLineEntry()
+
 
         final_string = ""
         start_index = stream.lower().find(s, last_index)
@@ -90,18 +98,18 @@ def split_stream(occurence, task): # TODO rename
         else:
             path = ""
 
-        real_value_entry.append(window_padding + task.representation) # TODO remove, not used any more
-        real_value_entry.append(before + orig_task + after)
+        #task_list_line_entry.append(window_padding + task.representation) # TODO remove, not used any more
+        task_list_line_entry.linecontent = before + orig_task + after
 
         if settings.show_paths_for_task_list == args.toggle_paths:
-            real_value_entry.append(path + BOLD + task.color + occurence.filename.rjust(0).strip() + RESET)
+            task_list_line_entry.path = path + BOLD + task.color + occurence.filename.rjust(0).strip() + RESET
         else:
-            real_value_entry.append(path + occurence.filename.rjust(0).strip())
+            task_list_line_entry.path = path + occurence.filename.rjust(0).strip()
 
-        real_value_entry.append(str(occurence.linenumber))
+        task_list_line_entry.linenumber = (str(occurence.linenumber))
 
 
-        all_lines.append(real_value_entry)
+        all_lines.append(task_list_line_entry)
 
     return all_lines
 
@@ -147,11 +155,12 @@ def list_tasks(cli_tasks):
     for kv in occurences_dict_sorted_by_priority:
         task = kv[0] # Task
         occurence_list = kv[1] # Occurence []
-        real_values = []
+        task_list_line_entries = []
+
 
         for o in occurence_list:
             for line in split_stream(o, task):
-                real_values.append(line)
+                task_list_line_entries.append(line)
 
         # find max column widths
         substitutes = [0] * 4 # substitutes for invisible characters
@@ -163,34 +172,34 @@ def list_tasks(cli_tasks):
             substitutes[2] = 0
 
 
-        max_widths = [0] * 4
-        for v in real_values:
-            for i in range(len(v)):
-                max_widths[i] = max(max_widths[i], len(v[i]))
+        max_widths = [0] * 3
+        for task_list_line_entry in task_list_line_entries:
+            max_widths[0] = max(max_widths[0], len(task_list_line_entry.linecontent))
+            max_widths[1] = max(max_widths[1], len(task_list_line_entry.path))
+            max_widths[2] = max(max_widths[2], len(task_list_line_entry.linenumber))
 
         if settings.show_paths_for_task_list == args.toggle_paths:
-            max_widths[2] -= substitutes[2]
+            max_widths[1] -= substitutes[2]
 
         line_beginning_spacing = "  "
-        max_widths[0] = len(line_beginning_spacing)
+        #max_widths[0] = len(line_beginning_spacing)
 
         # clamp to window width
         s = len(spacing)
-        availablespace = int(utils.get_window_size().x) - max_widths[0] - s - max_widths[2] - s - max_widths[3] - s - len(window_padding) + substitutes[1] + s + 6 # the last ' + s + 2' is for setting [0] to 'line_beginning_spacing' and add whitespace to the right side
-        max_widths[1] = availablespace
+        availablespace = int(utils.get_window_size().x) - len(line_beginning_spacing) - s - max_widths[1] - s - max_widths[2] - s - len(window_padding) + substitutes[1] + s + 6 # the last ' + s + 2' is for setting [0] to 'line_beginning_spacing' and add whitespace to the right side
+        max_widths[0] = availablespace
 
-        print(" " + task.color + BOLD + task.representation + " [" + str(len(real_values)) + "]" + RESET)
+        print(" " + task.color + BOLD + task.representation + " [" + str(len(task_list_line_entries)) + "]" + RESET)
         print()
 
-        for v in real_values:
-            if len(v[1]) > max_widths[1]:
-                v[1] = v[1][:max_widths[1]-3] + "..."
-            # TODO remove v[0] and max_width[0] because they are not used any more
-            # taskword = task.color + v[0].ljust(max_widths[0]) + spacing + RESET # legacy
+        for task_list_line_entry in task_list_line_entries:
+            if len(task_list_line_entry.linecontent) > max_widths[0]:
+                task_list_line_entry.linecontent = task_list_line_entry.linecontent[:max_widths[0] - 3] + "..."
+
             taskword = line_beginning_spacing
-            line = v[1][:max_widths[1]].ljust(max_widths[1]) + spacing
-            filename = v[2].ljust(max_widths[2] + substitutes[2]) + spacing
-            linenumber = v[3].rjust(max_widths[3])
+            line = task_list_line_entry.linecontent[ : max_widths[0]].ljust(max_widths[0]) + spacing
+            filename = task_list_line_entry.path.ljust(max_widths[1] + substitutes[2]) + spacing
+            linenumber = task_list_line_entry.linenumber.rjust(max_widths[2])
 
 
             # TODO use python3.6 f-strings
