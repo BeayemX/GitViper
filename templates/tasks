@@ -8,7 +8,9 @@ color = yellow
 bold=true
 # the font color used for tags
 font color = black
-# tags will be sorted by priority. priorities below 1 will be displayed in a second line
+# Tasks can be grouped in rows
+row = 0
+# tags will be sorted by priority within their corresponding line
 priority = 1
 # 'disabled' can be used to ignore certain tasks defined in your home directory
 # disabled
