@@ -111,6 +111,11 @@ def split_stream(occurence, task): # TODO rename
 
         all_lines.append(task_list_line_entry)
 
+        # HACK to avoid duplicate lines when 'task.key == linecontent'
+        hack_check = ","
+        if hack_check.join(stream_split) == hack_check:
+            break
+
     return all_lines
 
 
