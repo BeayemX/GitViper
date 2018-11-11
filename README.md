@@ -139,7 +139,11 @@ Example usage:
 tasklist -a myNewTask anotherTask
 ```
 
-The configuration can be ignored by using `-i`. This is useful if only undefined Tasks should be displayed. eg ```tasklist -i -a onlyShowThisTask andThisTask```
+The configuration can be ignored by using `-i`. This is useful if only undefined Tasks should be displayed. eg 
+
+```
+tasklist -i -a onlyShowThisTask andThisTask
+```
 
 ## Configuration
 Many things that are displayed can be adjusted in the configuration files. You can configure tasks, ignored files / directories and default values for the standard `GitViper` display.
