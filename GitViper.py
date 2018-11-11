@@ -73,7 +73,7 @@ if len(sys.argv) > 1:
 
 # module variables
 label = "GitViper"
-version = "v0.1.6"
+version = "v0.2"
 branch = ""
 branch_path = gitviper_path + '/.git/HEAD'
 if os.path.isfile(branch_path):
