@@ -20,4 +20,4 @@ commit-author-max-length = 0
 
 [Task View]
 show-path = true
-strip-comment-symbols = true
+strip-comment-symbols = false
