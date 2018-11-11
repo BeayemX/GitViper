@@ -39,9 +39,11 @@ There are two python files you can use. `GitViper.py` is used to display the mai
 The second file is `TaskList.py` which is used to list all occurences of task-keywords.
 
 For convenience's sake there is also `GitViperLoader.sh` which can be used to add aliases for these two files to your bash environment by running
+
 ```
 source ~/GitViper/GitViperLoader.sh
 ```
+
 or putting this line into your `.bashrc`. Just make sure you are using the right directory. It also adds some more shortcuts to improve the overall experience. For example if you use this convencience-file aliases all commands clear the screen before showing information. If you just want to use the python files you can still take a look inside this file to see possible calls with different command line arguments. or you can show the help by executing:
 
 ```
@@ -56,37 +58,55 @@ The main view is split into different categories. Each category is only shown if
 
 **Tasks**
 
-`gitviper task`
+```
+gitviper task
+```
+
 or
-`gitviper tasks`
+
+```
+gitviper tasks
+```
 
 A task is a keyword you can define. Usually something like `TODO`, `FIXME` or `HACK`. The task category lists the count of all defined keywords throughout the project (directories or filetypes can be excluded). You can adjust these keywords in the `/.gitviper/tasks` file and add priorities to different tasks. For further information regarding configuration see the Configuration section. The tasks will be sorted descending by their priority.
 
 **Branches**
 
-`gitviper branch`
+```
+gitviper branch
+```
+
 or
-`gitviper branches`
+
+```
+gitviper branches
+```
 
 Every remote and every branch on the remote is listed.
 Every local branch is listed, highlights its tracking branch and shows how many commits it is ahead and behind.
 
 **Commits**
 
-`gitviper log`
+```
+gitviper log
+```
 
 This category shows the last few commits, their committed time and if these commits have different authors, also the authors' names. The first word of each commit message is also highlighted to make it easier to identify each commit's purpose.
 The header also shows the tracking branch and how many commits can be pushed or pulled. If the current branch does not have a tracking branch it shows a hint that it is a local branch.
 
 **Stash**
 
-`gitviper stash`
+```
+gitviper stash
+```
 
 This category shows all stashes, their stash-IDs and their stash messages.
 
 **Status**
 
-`gitviper status`
+```
+gitviper status
+```
 
 The status category shows all staged, unstaged and untracked files. Each subcategory will only be display if there are files that belong to that subcategory.
 
@@ -98,6 +118,7 @@ You can display the task list by running the `TaskList.py` file or if you are us
 
 There are several optional options available.
 A task looks something like this
+
 ```
 [To-Do]
 key = todo
@@ -113,9 +134,12 @@ All lines except for the section header are optional. If one line is not used it
 
 If you want to show additional task-keywords in the TaskList you can use an arbitrary number of keywords when using the `-a` flag.
 Example usage:
-`tasklist -a myNewTask anotherTask`
 
-The configuration can be ignored by using `-i`. This is useful if only undefined Tasks should be displayed. eg `tasklist -i -a onlyShowThisTask andThisTask`.
+```
+tasklist -a myNewTask anotherTask
+```
+
+The configuration can be ignored by using `-i`. This is useful if only undefined Tasks should be displayed. eg ```tasklist -i -a onlyShowThisTask andThisTask```
 
 ## Configuration
 Many things that are displayed can be adjusted in the configuration files. You can configure tasks, ignored files / directories and default values for the standard `GitViper` display.
@@ -126,7 +150,13 @@ This will copy the files located in `templates` into a `.gitviper` folder. The t
 
 You can also use a `.gitviper` directory in your home directory to use these configurations for every repository. The values from this global configuration will be overwritten by a local configuration.
 
-It is also possible to ignore all configurations. This is usefull if you are checking multiple different repositores, so you don't have to know every repository specific configuration. If you want to see the last few commits in each repository you can just use `gitviper --ignore-conf -l -inv -ln 10` and you don't have to worry about global or local configurations.
+It is also possible to ignore all configurations. This is usefull if you are checking multiple different repositores, so you don't have to know every repository specific configuration. If you want to see the last few commits in each repository you can just use
+
+```
+gitviper --ignore-conf -l -inv -ln 10
+```
+
+and you don't have to worry about global or local configurations.
 
 
 ## Feedback and bugs
