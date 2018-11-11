@@ -24,14 +24,25 @@ import sys
 if len(sys.argv) > 1:
     if sys.argv[1] == "init":
         if not os.path.isdir(project_dir + "/.git"):
-            print("This is not a git repository!")
-            exit()
+            arg_string = "--force"
+            if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
+                pass
+            else:
+                print("This is not a git repository!")
+                print("Use " + arg_string + " to force the creation of the .gitviper directory outside of a repository")
+                exit()
 
         if not os.path.isdir(project_dir + "/.gitviper"):
             os.makedirs(project_dir + "/.gitviper")
             print("Initialized GitViper.")
         else:
-            print("Reinitialized GitViper.")
+            arg_string = "--re-init"
+            if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
+                print("Reinitialized GitViper configuration.")
+            else:
+                print("Configuration folder already exists!")
+                print("Use " + arg_string + " to overwrite existing settings.")
+                exit()
 
         # copy template files
         from shutil import copyfile
