@@ -78,7 +78,7 @@ The status category shows all staged, unstaged and untracked files. Each subcate
 
 ## Task list
 
-![image](https://user-images.githubusercontent.com/3453076/35360923-a97b956e-015f-11e8-9ffc-73ed4df53c3a.png)
+![untitled](https://user-images.githubusercontent.com/3453076/48317511-b6b61500-e5f3-11e8-8426-5bee86120cc0.png)
 
 You can display the task list by running the `TaskList.py` file or if you are using the `GitViperLoader.sh` file by running `todo`. The task list is used to show every task (that has been defined in the settings) and where it occurs. It shows the line content, the file name and the line number.
 
