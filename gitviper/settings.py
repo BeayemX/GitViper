@@ -81,7 +81,8 @@ def _load_tasks_from_config_file(dir_path):
                 sec.get("color"),
                 sec.getint("priority"),
                 sec.get("font color"),
-                sec.getboolean("bold")
+                sec.getboolean("bold"),
+                sec.getint("row")
             ))
         else:
             settings.remove_task(section)

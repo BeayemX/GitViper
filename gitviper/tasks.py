@@ -21,8 +21,7 @@ def list_tasks():
 	for f in files:
 		count_tasks(osp.join(f[0], f[1]), counter_dict)
 
-	line1 = " "
-	line2 = "\n "
+	lines = {}
 
 	max_task_chars = 0
 	max_digits = 0
@@ -37,20 +36,28 @@ def list_tasks():
 			continue
 		color = task.bgcolor
 		line = BLACK + color + " " + task.representation.ljust(max_task_chars) + spacing + str(counter_dict[task.value]).rjust(max_digits) + " " + RESET + taskspacing
-		if task.priority > 0:
-			line1 += line
-		else:
-			line2 += line
 
-	if len(line1.strip()) > 0:
-		print(line1)
-	if len(line2.strip()) > 0:
-		print(line2)
+		if task.row not in lines:
+			lines[task.row] = "  " # initial spacing
 
-	if len(line1.strip()) > 0 or len(line2.strip()) > 0:
-		return True
+		lines[task.row] += line
 
-	return False
+	# print lines
+
+	first_line_done = False
+
+	for line_key in sorted(lines, reverse = False):
+
+		# don't add empty line for fist line
+		if first_line_done:
+			print()
+
+		print(lines[line_key])
+
+		first_line_done = True
+
+
+	return len(lines) > 0
 
 def count_tasks(filename, counter_dict):
 	with open(filename, 'r') as myfile:
