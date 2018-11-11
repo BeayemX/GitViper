@@ -141,18 +141,18 @@ for directory in directories:
 # command line arguments
 parser = argparse.ArgumentParser(description="This will show all values that can be toggled. The initial value is gathered from the configuration file(s). The default values are used if there are no files provided.")
 parser.add_argument("-ig", "--ignore-conf", action="store_true", help="ignore all configuration files and use the default values")
-parser.add_argument("-t", "--tasks", action="store_true", help="hide the tasks category")
-parser.add_argument("-b", "--branches", action="store_true", help="hide the branches category")
-parser.add_argument("-s", "--status", action="store_true", help="hide the status category")
-parser.add_argument("-st", "--stash", action="store_true", help="hide the stash category")
-parser.add_argument("-l", "--logs", action="store_true", help="hide the commit logs category")
+parser.add_argument("-t", "--tasks", action="store_true", help="toggle the tasks category")
+parser.add_argument("-b", "--branches", action="store_true", help="toggle the branches category")
+parser.add_argument("-s", "--status", action="store_true", help="toggle the status category")
+parser.add_argument("-st", "--stash", action="store_true", help="toggle the stash category")
+parser.add_argument("-l", "--logs", action="store_true", help="toggle the commit logs category")
 parser.add_argument("-ln", "--log-number", type=int, default=0, help="specifiy the number of logs that will be shown")
 parser.add_argument("-tm", "--time", action="store_true", help="show time needed for each category")
 parser.add_argument("-d", "--max-days-old", type=int, default=0, help="specifiy the number of days to consider for the commit log")
 parser.add_argument("-sep", "--separate-commits", action="store_true", help="separate the commit logs by days")
 parser.add_argument("--debug", action="store_true", help="show debug logs")
 
-parser.add_argument("-inv", "--invert", action='store_true', help="only show the given categories instead of hiding them")
+parser.add_argument("-inv", "--invert", action='store_true', help="invert the given values")
 
 args = parser.parse_args()
 
