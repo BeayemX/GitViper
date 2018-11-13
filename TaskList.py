@@ -127,7 +127,7 @@ def list_tasks(cli_tasks):
     if cli_tasks != None:
         from gitviper.task import Task
         for cli_task in cli_tasks:
-            settings.add_task(Task(cli_task, None, None, None, None, None))
+            settings.add_task(Task(cli_task, None, None, None, None, None, None))
 
     # initialize dict
     for k in settings.tasks:
