@@ -4,7 +4,7 @@ class Task:
     # will be parsed from config file and 'None' will be forwarded
     def __init__(self, representation, value, color, priority, font_color, bold, row):
         self.representation = representation
-        self.value = value if value != None else representation.lower()
+        self.value = value if value != None else representation
         self.priority = priority if priority != None else 0 # priorities below 1 will be displayed in the second line
         self.row = row if row != None else 0
 

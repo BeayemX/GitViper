@@ -62,10 +62,10 @@ def list_tasks():
 def count_tasks(filename, counter_dict):
 	with open(filename, 'r') as myfile:
 		try:
-			filestream = myfile.read().lower()
+			filestream = myfile.read()
 
 			for task in s.tasks:
-				counter_dict[task.value] += filestream.count(task.value.lower())
+				counter_dict[task.value] += filestream.count(task.value)
 
 		except UnicodeDecodeError:
 			#print(RED, "Could not read", filename, RESET)

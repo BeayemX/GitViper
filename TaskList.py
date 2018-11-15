@@ -32,7 +32,7 @@ def fill_dictionary(task, file):
     with open(fullpath, 'r') as myFile:
         try:
             for num, line in enumerate(myFile, 1):
-                if task.value in line.lower():
+                if task.value in line:
                     occurences.append([num, line])
         except UnicodeDecodeError:
             pass
@@ -60,14 +60,14 @@ def split_stream(occurence, task): # TODO rename
         stream = stream.strip()
 
 
-    stream_split = stream.lower().split(key.lower())
+    stream_split = stream.split(key)
 
     for s in stream_split:
         task_list_line_entry = TaskListLineEntry()
 
 
         final_string = ""
-        start_index = stream.lower().find(s, last_index)
+        start_index = stream.find(s, last_index)
         s_length = len(s)
 
         task_start_idx = start_index - len(key) # the task keywords is before 's'
