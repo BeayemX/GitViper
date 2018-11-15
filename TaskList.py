@@ -98,7 +98,6 @@ def split_stream(occurence, task): # TODO rename
         else:
             path = ""
 
-        #task_list_line_entry.append(window_padding + task.representation) # TODO remove, not used any more
         task_list_line_entry.linecontent = before + highlighted_task + after
 
         if settings.show_paths_for_task_list == args.toggle_paths:
