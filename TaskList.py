@@ -86,7 +86,7 @@ def split_stream(occurence, task): # TODO rename
         if task_start_idx < 0:
             continue
 
-        orig_task = BOLD + task.color + stream[task_start_idx : task_end_idx] + RESET
+        highlighted_task = BOLD + task.color + task.value + RESET
 
         before = stream[ 0 : start_index - len(key)]
         after = stream[start_index : ]
@@ -99,7 +99,7 @@ def split_stream(occurence, task): # TODO rename
             path = ""
 
         #task_list_line_entry.append(window_padding + task.representation) # TODO remove, not used any more
-        task_list_line_entry.linecontent = before + orig_task + after
+        task_list_line_entry.linecontent = before + highlighted_task + after
 
         if settings.show_paths_for_task_list == args.toggle_paths:
             task_list_line_entry.path = path + BOLD + task.color + occurence.filename.rjust(0).strip() + RESET
