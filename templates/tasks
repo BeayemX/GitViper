@@ -1,8 +1,8 @@
 # the section header will be used as the text for the tags
-[To-Do]
+[ToDo]
 
-# the string to search for. if key is not provided, the header (in lower-case) will be used
-key = todo
+# the string to search for. if key is not provided, the header will be used
+key = TODO
 
 # this color will be used as background color when listing tasks as tags and as font color when listing tasks
 color = yellow
