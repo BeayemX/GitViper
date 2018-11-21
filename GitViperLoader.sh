@@ -1,5 +1,5 @@
 #!/bin/bash
-GITVIPER_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+GITVIPER_DIRECTORY="$( builtin cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # actual GitViper scripts
 alias gitviper='python3 ${GITVIPER_DIRECTORY}/GitViper.py'
