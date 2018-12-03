@@ -45,7 +45,7 @@ def move_cursor_up(rows=1):
 def string_to_color(color_as_string):
 	if color_as_string == None:
 		return None
-	return _get_color_from_string(color_as_string.lower())
+	return _get_color_from_string(color_as_string.lower()) # TODO use .casefold() instead of lower()?
 
 def _get_color_from_string(color_as_string):
 	# TODO use dictionary to return color?

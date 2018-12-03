@@ -23,7 +23,7 @@ def get_files():
 		# TODO use generator?
 		for f in filenames:
 			for exf in settings.ignored_files:
-				if exf.lower() in f.lower():
+				if exf.casefold() in f.casefold():
 					break
 			else:
 				files.append((dirpath, f))
