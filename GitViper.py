@@ -220,7 +220,7 @@ print(text)
 start_time = time.time()
 current_time = start_time
 
-time_separator = "".join(["-"] * int(window_width))
+time_separator = "-" * int(window_width)
 
 def show_time():
     global current_time
