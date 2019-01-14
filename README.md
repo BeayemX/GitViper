@@ -12,11 +12,10 @@ sudo dnf install git
 
 GitViper uses **[GitPython](https://github.com/gitpython-developers/GitPython)** for working with the git repository and the **humanize** package to display times and dates in a more readable way.
 
-Both can be installed using
+All dependencies can be installed using the provided `requirements.txt` by running
 
 ```
-pip3 install GitPython
-pip3 install humanize
+pip3 install -r requirements.txt
 ```
 
 which needs:
