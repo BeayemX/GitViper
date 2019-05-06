@@ -10,7 +10,7 @@ sudo apt-get install git
 sudo dnf install git
 ```
 
-GitViper uses **[GitPython](https://github.com/gitpython-developers/GitPython)** for working with the git repository and the **humanize** package to display times and dates in a more readable way.
+GitViper uses **[GitPython](https://github.com/gitpython-developers/GitPython)** for working with the git repository and the **[humanize](https://github.com/jmoiron/humanize)** package to display times and dates in a more readable way.
 
 All dependencies can be installed using the provided `requirements.txt` by running
 
