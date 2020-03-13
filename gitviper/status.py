@@ -5,8 +5,8 @@ from gitviper.colors import *
 
 from gitviper.gitconnector import connection
 
-spacing_sub_header = "  "
-spacing_files = "    "
+spacing_sub_header = ' ' * 2
+spacing_files = ' ' * 4
 
 def list_status():
 	if connection.repo.is_dirty() or len(connection.repo.untracked_files) > 0:
