@@ -49,13 +49,8 @@ def list_unstaged_files():
 		set_color(RESET)
 
 def list_untracked_files():
-	# u_files = connection.repo.untracked_files
-
-	# HACK
-	import subprocess
-	command = ["git", "ls-files", "--others", "--directory", "--exclude-standard", "--no-empty-directory"]
-	process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	u_files = [u.decode().strip() for u in process.stdout]
+	u_files = connection.repo.git.ls_files("--others", "--directory", "--exclude-standard", "--no-empty-directory").split('\n')
+	u_files = list(filter(None, u_files)) # Strip empty lines, only needed for last new-line
 
 	if len(u_files) > 0:
 		print_sub_header("Untracked files", None)
