@@ -107,7 +107,7 @@ default_values = {
     "log_number" : 5,
     "max_days" : 0,
     "invert": False,
-    "diff-changes": True
+    "tasks-diff": True
 }
 
 # setup value dictionaries
@@ -136,7 +136,7 @@ def load_defaults(dir_path):
         conf_values["stash"] = config["Display Settings"].getboolean("show-stash")
         conf_values["logs"] = config["Display Settings"].getboolean("show-logs")
         conf_values["time"] = config["Display Settings"].getboolean("show-time")
-        conf_values["diff-changes"] = config["Display Settings"].getboolean("show-tasks-only-for-current-changes")
+        conf_values["tasks-diff"] = config["Display Settings"].getboolean("show-tasks-only-for-current-changes")
 
     except KeyError:
         pass
@@ -156,6 +156,7 @@ for directory in directories:
 parser = argparse.ArgumentParser(description="This will show all values that can be toggled. The initial value is gathered from the configuration file(s). The default values are used if there are no files provided.")
 parser.add_argument("-ig", "--ignore-conf", action="store_true", help="ignore all configuration files and use the default values")
 parser.add_argument("-t", "--tasks", action="store_true", help="toggle the tasks category")
+parser.add_argument("-td", "--tasks-diff", action="store_true", help="toggle tasks showing only for the currently modified files or all files")
 parser.add_argument("-b", "--branches", action="store_true", help="toggle the branches category")
 parser.add_argument("-s", "--status", action="store_true", help="toggle the status category")
 parser.add_argument("-st", "--stash", action="store_true", help="toggle the stash category")
@@ -173,6 +174,7 @@ args = parser.parse_args()
 # cli toggles
 cli_arg_values["ignore_conf"] = args.ignore_conf
 cli_arg_values["tasks"] = args.tasks
+cli_arg_values["tasks-diff"] = args.tasks_diff
 cli_arg_values["branches"] = args.branches
 cli_arg_values["status"] = args.status
 cli_arg_values["stash"] = args.stash
@@ -247,14 +249,14 @@ def finalize_category(category_is_visible):
         reset_time()
 
 try:
-    if not final_values['diff-changes']:
+    if not final_values['tasks-diff']:
         if final_values["tasks"] != final_values["invert"]:
             finalize_category(gitviper.list_tasks())
 
     # git
     gitconnector.connect()
 
-    if final_values['diff-changes']:
+    if final_values['tasks-diff']:
         if final_values["tasks"] != final_values["invert"]:
             finalize_category(gitviper.list_tasks_of_diff())
 
