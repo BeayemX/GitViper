@@ -107,7 +107,7 @@ default_values = {
     "log_number" : 5,
     "max_days" : 0,
     "invert": False,
-    "diff-changes": False
+    "diff-changes": True
 }
 
 # setup value dictionaries
