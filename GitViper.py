@@ -106,7 +106,8 @@ default_values = {
     "separate_commits" : False,
     "log_number" : 5,
     "max_days" : 0,
-    "invert": False
+    "invert": False,
+    "diff-changes": False
 }
 
 # setup value dictionaries
@@ -135,6 +136,8 @@ def load_defaults(dir_path):
         conf_values["stash"] = config["Display Settings"].getboolean("show-stash")
         conf_values["logs"] = config["Display Settings"].getboolean("show-logs")
         conf_values["time"] = config["Display Settings"].getboolean("show-time")
+        conf_values["diff-changes"] = config["Display Settings"].getboolean("show-tasks-only-for-current-changes")
+
     except KeyError:
         pass
 
@@ -244,11 +247,16 @@ def finalize_category(category_is_visible):
         reset_time()
 
 try:
-    if final_values["tasks"] != final_values["invert"]:
-        finalize_category(gitviper.list_tasks())
+    if not final_values['diff-changes']:
+        if final_values["tasks"] != final_values["invert"]:
+            finalize_category(gitviper.list_tasks())
 
     # git
     gitconnector.connect()
+
+    if final_values['diff-changes']:
+        if final_values["tasks"] != final_values["invert"]:
+            finalize_category(gitviper.list_tasks_of_diff())
 
     if connection.is_git_repo:
         if final_values["branches"] != final_values["invert"]:

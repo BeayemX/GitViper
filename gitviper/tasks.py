@@ -10,6 +10,41 @@ import gitviper.utilities as utils
 spacing = "  "
 taskspacing = "  "
 
+def list_tasks_of_diff():
+	t = connection.repo.head.commit.tree
+	x = connection.repo.git.diff(t, '--color=always').split('\n')
+	y = connection.repo.git.diff(t, '--color=always', '--staged').split('\n')
+	z = set(x+y)
+	z = y # list only for staged
+	z = x # list staged and unstaged
+
+	final_lines = []
+
+	for line in z:
+		#if repr(line).startswith(repr(GREEN)):
+		if line.startswith(GREEN):
+			line = line.lstrip(GREEN)[1:]
+			#print('+++++++', line)
+			final_lines.append(line)
+		elif line.startswith(RED):
+			line = line.lstrip(RED)[1:]
+			#print('-------', line)
+			final_lines.append(line)
+
+
+
+	counter_dict = {}
+
+	for task in s.tasks:
+		counter_dict[task.value] = 0
+
+	for task in s.tasks:
+		for line in final_lines:
+			if task.value in line:
+				counter_dict[task.value] += 1
+
+	print_tasks(counter_dict)
+
 def list_tasks():
 	counter_dict = {}
 
@@ -21,6 +56,9 @@ def list_tasks():
 	for f in files:
 		count_tasks(osp.join(f[0], f[1]), counter_dict)
 
+	print_tasks(counter_dict)
+
+def print_tasks(counter_dict):
 	lines = {}
 
 	max_task_chars = 0
@@ -42,20 +80,10 @@ def list_tasks():
 
 		lines[task.row] += line
 
-	# print lines
-
-	first_line_done = False
-
+	# Print lines
 	for line_key in sorted(lines, reverse = False):
-
-		# don't add empty line for fist line
-		if first_line_done:
-			print()
-
 		print(lines[line_key])
-
-		first_line_done = True
-
+		print()
 
 	return len(lines) > 0
 

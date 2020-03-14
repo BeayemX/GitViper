@@ -12,3 +12,4 @@ list_status = status.list_status
 list_stash = stash.list_stash
 
 list_tasks = tasks.list_tasks
+list_tasks_of_diff = tasks.list_tasks_of_diff

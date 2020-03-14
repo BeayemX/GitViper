@@ -15,6 +15,7 @@ class Settings:
 
         self.strip_comment_symbols = True
         self.show_paths_for_task_list = True
+        self.show_tasks_only_for_current_changes = True
 
     def add_task(self, task):
         def get_key(task):
