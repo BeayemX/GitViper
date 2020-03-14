@@ -12,7 +12,7 @@ class Vector2:
 
 def get_window_size():
 	rows, columns = os.popen('stty size', 'r').read().split()
-	return Vector2(columns, rows)
+	return Vector2(int(columns), int(rows))
 
 def get_files():
 	files = []

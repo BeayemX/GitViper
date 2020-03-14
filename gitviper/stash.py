@@ -54,7 +54,7 @@ def print_stash():
 
 	# cap message length so there is no line break
 	w = util.get_window_size()
-	msg_length = int(w.x) - max_col_widths[0] - max_col_widths[1]
+	msg_length = w.x - max_col_widths[0] - max_col_widths[1]
 
 	# use max length
 	max_col_widths[2] = msg_length

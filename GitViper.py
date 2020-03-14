@@ -214,18 +214,18 @@ window_width = gitviper.utilities.get_window_size().x
 text = label + " " + version + "-" + branch
 if text[-1] == "-":
     text = text[0 : -1]
-text = text.rjust(int(window_width))
+text = text.rjust(window_width)
 print(text)
 
 start_time = time.time()
 current_time = start_time
 
-time_separator = "-" * int(window_width)
+time_separator = "-" * window_width
 
 def show_time():
     global current_time
     delta_time = str(round(time.time() - current_time, 3))
-    print(BOLD + BLUE + (delta_time + " seconds ").rjust(int(window_width)) + RESET)
+    print(BOLD + BLUE + (delta_time + " seconds ").rjust(window_width) + RESET)
     reset_time()
 
 def reset_time():

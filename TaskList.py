@@ -190,7 +190,7 @@ def list_tasks(cli_tasks):
 
         # clamp to window width
         s = len(spacing)
-        availablespace = int(utils.get_window_size().x) - len(line_beginning_spacing) - s - max_widths[1] - s - max_widths[2] - s - len(window_padding) + substitutes[1] + s + 6 # the last ' + s + 2' is for setting [0] to 'line_beginning_spacing' and add whitespace to the right side
+        availablespace = utils.get_window_size().x - len(line_beginning_spacing) - s - max_widths[1] - s - max_widths[2] - s - len(window_padding) + substitutes[1] + s + 6 # the last ' + s + 2' is for setting [0] to 'line_beginning_spacing' and add whitespace to the right side
         max_widths[0] = availablespace
 
         print(" " + task.color + BOLD + task.representation + " [" + str(len(task_list_line_entries)) + "]" + RESET)

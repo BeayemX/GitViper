@@ -119,11 +119,11 @@ def log(max_commit_count, max_days_old, separate_commits):
 
 	# cap message length so there is no line break
 	w = utilities.get_window_size()
-	msg_length = int(w.x) - max_col_widths[0] - max_col_widths[1]
+	msg_length = w.x - max_col_widths[0] - max_col_widths[1]
 
 	# store max needed length for commit before adjusting length for messages
 	max_commit_length = max_col_widths[0] + max_col_widths[1] + max_col_widths[2] - len(spacing)
-	max_commit_length = min(max_commit_length, int(w.x))
+	max_commit_length = min(max_commit_length, w.x)
 	max_col_widths[2] = msg_length
 
 	last_displayed_date = commit_arrays[0].relative_date
