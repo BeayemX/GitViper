@@ -1,3 +1,5 @@
+import re
+
 BLACK	= "\033[30m"
 RED		= "\033[31m"
 GREEN	= "\033[32m"
@@ -71,3 +73,7 @@ def _get_color_from_string(color_as_string):
 	if color_as_string == "bold": return BOLD
 
 	return None
+
+def remove_color_codes_from_string(text):
+	ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+	return ansi_escape.sub('', text)
