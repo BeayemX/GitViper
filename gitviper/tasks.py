@@ -7,43 +7,52 @@ from gitviper.gitconnector import connection
 
 import gitviper.utilities as utils
 
-spacing = "  "
-taskspacing = "  "
+spacing = " " * 2
+taskspacing = " " * 2
+initial_spacing = " " * 2
 
 def list_tasks_of_diff():
 	t = connection.repo.head.commit.tree
 	x = connection.repo.git.diff(t, '--color=always').split('\n')
 	y = connection.repo.git.diff(t, '--color=always', '--staged').split('\n')
-	z = set(x+y)
+
 	z = y # list only for staged
 	z = x # list staged and unstaged
 
 	final_lines = []
 
 	for line in z:
-		#if repr(line).startswith(repr(GREEN)):
 		if line.startswith(GREEN):
 			line = line.lstrip(GREEN)[1:]
-			#print('+++++++', line)
 			final_lines.append(line)
 		elif line.startswith(RED):
 			line = line.lstrip(RED)[1:]
-			#print('-------', line)
 			final_lines.append(line)
-
-
 
 	counter_dict = {}
 
 	for task in s.tasks:
 		counter_dict[task.value] = 0
 
+	not_empty = False
 	for task in s.tasks:
 		for line in final_lines:
 			if task.value in line:
 				counter_dict[task.value] += 1
+				not_empty = True
 
-	print_tasks(counter_dict)
+	if not_empty:
+		# Highlight line
+		line = ' ' * utils.get_window_size().x
+		print(f"{BG_RED}{line}{RESET}")
+		print()
+
+		# Print actual Tasks
+		print_tasks(counter_dict)
+
+		# Highlight line
+		print(f"{BG_RED}{line}{RESET}")
+		print()
 
 def list_tasks():
 	counter_dict = {}
@@ -76,7 +85,7 @@ def print_tasks(counter_dict):
 		line = BLACK + color + " " + task.representation.ljust(max_task_chars) + spacing + str(counter_dict[task.value]).rjust(max_digits) + " " + RESET + taskspacing
 
 		if task.row not in lines:
-			lines[task.row] = "  " # initial spacing
+			lines[task.row] = initial_spacing
 
 		lines[task.row] += line
 
