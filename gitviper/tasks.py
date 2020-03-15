@@ -23,11 +23,11 @@ def list_tasks_of_diff():
 
 	for line in z:
 		if line.startswith(GREEN):
-			line = line.lstrip(GREEN)[1:]
-			final_lines.append(line)
+			new_line = line.lstrip(GREEN)[1:]
+			final_lines.append(new_line)
 		elif line.startswith(RED):
-			line = line.lstrip(RED)[1:]
-			final_lines.append(line)
+			new_line = line.lstrip(RED)[1:]
+			final_lines.append(new_line)
 
 	counter_dict = {}
 
@@ -41,6 +41,21 @@ def list_tasks_of_diff():
 				counter_dict[task.value] += 1
 				not_empty = True
 
+	def list_tasks_in_changes():
+		for task in s.tasks:
+			occurence_happened = False
+			for line in final_lines:
+				if task.value in line:
+					occurence_happened = True
+					l = remove_color_codes_from_string(line.strip())
+					l = l.strip('\t')
+					line_parts = l.split(task.value, 1)
+					l = f"  {line_parts[0]}{BOLD}{task.color}{task.value}{RESET}{line_parts[1]}"
+					print(f"{RESET}{WHITE}{l}")
+			if occurence_happened:
+				print()
+
+
 	if not_empty:
 		# Highlight line
 		line = ' ' * utils.get_window_size().x
@@ -49,6 +64,8 @@ def list_tasks_of_diff():
 
 		# Print actual Tasks
 		print_tasks(counter_dict)
+
+		list_tasks_in_changes()
 
 		# Highlight line
 		print(f"{BG_RED}{line}{RESET}")
