@@ -11,7 +11,7 @@ spacing = " " * 2
 taskspacing = " " * 2
 initial_spacing = " " * 2
 
-def list_tasks_of_diff():
+def list_tasks_of_diff(list_occurences):
 	t = connection.repo.head.commit.tree
 	x = connection.repo.git.diff(t, '--color=always').split('\n')
 	y = connection.repo.git.diff(t, '--color=always', '--staged').split('\n')
@@ -65,7 +65,8 @@ def list_tasks_of_diff():
 		# Print actual Tasks
 		print_tasks(counter_dict)
 
-		list_tasks_in_changes()
+		if list_occurences:
+			list_tasks_in_changes()
 
 		# Highlight line
 		print(f"{BG_RED}{line}{RESET}")

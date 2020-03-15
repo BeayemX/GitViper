@@ -107,7 +107,8 @@ default_values = {
     "log_number" : 5,
     "max_days" : 0,
     "invert": False,
-    "tasks-diff": True
+    "tasks-diff": True,
+    "tasks-list": True
 }
 
 # setup value dictionaries
@@ -157,6 +158,7 @@ parser = argparse.ArgumentParser(description="This will show all values that can
 parser.add_argument("-ig", "--ignore-conf", action="store_true", help="ignore all configuration files and use the default values")
 parser.add_argument("-t", "--tasks", action="store_true", help="toggle the tasks category")
 parser.add_argument("-td", "--tasks-diff", action="store_true", help="toggle tasks showing only for the currently modified files or all files")
+parser.add_argument("-tl", "--list-tasks-diff", action="store_true", help="toggle listing task occurences for the currently modified files or all files")
 parser.add_argument("-b", "--branches", action="store_true", help="toggle the branches category")
 parser.add_argument("-s", "--status", action="store_true", help="toggle the status category")
 parser.add_argument("-st", "--stash", action="store_true", help="toggle the stash category")
@@ -175,6 +177,7 @@ args = parser.parse_args()
 cli_arg_values["ignore_conf"] = args.ignore_conf
 cli_arg_values["tasks"] = args.tasks
 cli_arg_values["tasks-diff"] = args.tasks_diff
+cli_arg_values["tasks-list"] = args.list_tasks_diff
 cli_arg_values["branches"] = args.branches
 cli_arg_values["status"] = args.status
 cli_arg_values["stash"] = args.stash
@@ -182,6 +185,7 @@ cli_arg_values["logs"] = args.logs
 cli_arg_values["time"] = args.time
 cli_arg_values["separate_commits"] = args.separate_commits
 cli_arg_values["invert"] = args.invert
+
 
 # cli values
 cli_arg_values["max_days"] = args.max_days_old
@@ -258,7 +262,7 @@ try:
 
     if final_values['tasks-diff']:
         if final_values["tasks"] != final_values["invert"]:
-            finalize_category(gitviper.list_tasks_of_diff())
+            finalize_category(gitviper.list_tasks_of_diff(final_values["tasks-list"]))
 
     if connection.is_git_repo:
         if final_values["branches"] != final_values["invert"]:
