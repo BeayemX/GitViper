@@ -7,10 +7,11 @@ import gitviper.gui as gui
 import gitviper.utilities as utilities
 
 from gitviper.colors import *
-from gitviper.settings import settings as s
+
+from gitviper.config_loader import get_config
+final_config = None
 
 spacing = "  "
-
 
 class CommitListEntry:
 	def __init__(self, date, relative_date, author, message):
@@ -37,6 +38,9 @@ def show_logs():
 	return True
 
 def log(max_commit_count, max_days_old, separate_commits):
+	global final_config
+	final_config = get_config()
+
 	branch = connection.repo.active_branch
 	num_commits = len(list(connection.repo.iter_commits(branch)))
 
@@ -82,9 +86,9 @@ def log(max_commit_count, max_days_old, separate_commits):
 		commit_arrays.append(commit_to_string(commit))
 
 	# check if all commits are from the same author
-	multi_author = s.always_show_authors
+	multi_author = final_config['overview']['logging']['always_show_author']
 
-	if not s.always_show_authors:
+	if not final_config['overview']['logging']['always_show_author']:
 		if len(commit_arrays) > 0:
 			initial_author = commit_arrays[0].author
 			for commit in commit_arrays:
@@ -155,8 +159,8 @@ def log(max_commit_count, max_days_old, separate_commits):
 def commit_to_string(commit):
 	rel_date = utilities.get_relative_date(commit.committed_date)
 	date = utilities.get_date(commit.committed_date)
-	if s.commit_author_max_length > 0:
-		author = commit.author.name[:s.commit_author_max_length]
+	if final_config['overview']['logging']['commit_author_max_length'] > 0:
+		author = commit.author.name[:final_config['overview']['logging']['commit_author_max_length']]
 	else:
 		author = commit.author.name
 

@@ -1,0 +1,28 @@
+{
+    "overview": {
+        "areas": {
+            "tasks": true,
+            "branches": true,
+            "logs": true,
+            "stash": true,
+            "status": true
+        },
+        "settings": {
+            "show_time": false,
+            "show_tasks_only_for_current_changes": true,
+            "show_task_lines_in_overview": true
+        },
+        "logging": {
+            "number": 5,
+            "days": 0,
+            "show_separator": false,
+            "always_show_author": false,
+            "commit_author_max_length": 0
+        }
+    },
+    "taskview": {
+        "show_path": true,
+        "strip_comment_symbols": false
+    }
+
+}

@@ -1,7 +1,7 @@
 from os import walk
 import os.path as osp
 
-from gitviper.settings import settings as s
+from gitviper.task_loader import task_loader
 from gitviper.colors import *
 from gitviper.gitconnector import connection
 
@@ -31,18 +31,18 @@ def list_tasks_of_diff(list_occurences):
 
 	counter_dict = {}
 
-	for task in s.tasks:
+	for task in task_loader.tasks:
 		counter_dict[task.value] = 0
 
 	not_empty = False
-	for task in s.tasks:
+	for task in task_loader.tasks:
 		for line in final_lines:
 			if task.value in line:
 				counter_dict[task.value] += 1
 				not_empty = True
 
 	def list_tasks_in_changes():
-		for task in s.tasks:
+		for task in task_loader.tasks:
 			occurence_happened = False
 			for line in final_lines:
 				if task.value in line:
@@ -74,7 +74,7 @@ def list_tasks_of_diff(list_occurences):
 def list_tasks():
 	counter_dict = {}
 
-	for task in s.tasks:
+	for task in task_loader.tasks:
 		counter_dict[task.value] = 0
 
 	files = utils.get_files()
@@ -90,12 +90,12 @@ def print_tasks(counter_dict):
 	max_task_chars = 0
 	max_digits = 0
 
-	for task in s.tasks:
+	for task in task_loader.tasks:
 		if counter_dict[task.value] > 0:
 			max_task_chars = max(len(task.representation), max_task_chars)
 			max_digits = max(len(str(counter_dict[task.value])), max_digits)
 
-	for task in s.tasks:
+	for task in task_loader.tasks:
 		if counter_dict[task.value] == 0:
 			continue
 		color = task.bgcolor
@@ -118,7 +118,7 @@ def count_tasks(filename, counter_dict):
 		try:
 			filestream = myfile.read()
 
-			for task in s.tasks:
+			for task in task_loader.tasks:
 				counter_dict[task.value] += filestream.count(task.value)
 
 		except UnicodeDecodeError:

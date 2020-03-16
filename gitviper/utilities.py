@@ -1,6 +1,6 @@
 import os
 from os import walk
-from gitviper.settings import settings
+from gitviper.task_loader import task_loader
 
 from datetime import datetime, timedelta
 import humanize
@@ -18,11 +18,11 @@ def get_files():
 	files = []
 
 	for (dirpath, dirnames, filenames) in walk(os.getcwd()):
-		dirnames[:] = [d for d in dirnames if d not in settings.ignored_directories]
+		dirnames[:] = [d for d in dirnames if d not in task_loader.ignored_directories]
 
 		# TODO use generator?
 		for f in filenames:
-			for exf in settings.ignored_files:
+			for exf in task_loader.ignored_files:
 				if exf.casefold() in f.casefold():
 					break
 			else:

@@ -5,7 +5,7 @@ import argparse
 from gitviper.colors import *
 
 import gitviper.utilities as utils
-from gitviper.settings import settings
+from gitviper.task_loader import task_loader
 
 occurences_dict = {}
 spacing = "   "
@@ -52,7 +52,7 @@ def split_stream(occurence, task): # TODO rename
 
     stream = stream.strip()
     # strip commenting symbols
-    if settings.strip_comment_symbols:
+    if task_loader.strip_comment_symbols:
         stream = stream.replace("#", "")
         stream = stream.replace("//", "")
         stream = stream.replace("/*", "")
@@ -92,7 +92,7 @@ def split_stream(occurence, task): # TODO rename
         after = stream[start_index : ]
 
         # add to data used for creating table
-        if settings.show_paths_for_task_list == args.toggle_paths:
+        if task_loader.show_paths_for_task_list == args.toggle_paths:
             path = occurence.path.replace(os.getcwd(), "") + "/"
             path = path.lstrip("/")
         else:
@@ -100,7 +100,7 @@ def split_stream(occurence, task): # TODO rename
 
         task_list_line_entry.linecontent = before + highlighted_task + after
 
-        if settings.show_paths_for_task_list == args.toggle_paths:
+        if task_loader.show_paths_for_task_list == args.toggle_paths:
             task_list_line_entry.path = path + BOLD + task.color + occurence.filename.rjust(0).strip() + RESET
         else:
             task_list_line_entry.path = path + occurence.filename.rjust(0).strip()
@@ -121,22 +121,22 @@ def split_stream(occurence, task): # TODO rename
 def list_tasks(cli_tasks):
     # TODO should avoid adding unused Tasks in the first place instead of adding them and then clearing the list
     if args.ignore_conf:
-        settings.clear_tasks()
+        task_loader.clear_tasks()
 
     if cli_tasks != None:
         from gitviper.task import Task
         for cli_task in cli_tasks:
-            settings.add_task(Task(cli_task, None, None, None, None, None, None))
+            task_loader.add_task(Task(cli_task, None, None, None, None, None, None))
 
     # initialize dict
-    for k in settings.tasks:
+    for k in task_loader.tasks:
         occurences_dict[k] = []
 
     # get files as list
     files = utils.get_files()
 
     # fill dictionary
-    for task in settings.tasks:
+    for task in task_loader.tasks:
         for f in files:
             fill_dictionary(task, f)
 
@@ -170,7 +170,7 @@ def list_tasks(cli_tasks):
         substitutes = [0] * 4 # substitutes for invisible characters
         substitutes[1] = len(BOLD + RESET) # for highlighting tasks # FIXME adjust to new format, individual color per Task?
 
-        if settings.show_paths_for_task_list == args.toggle_paths:
+        if task_loader.show_paths_for_task_list == args.toggle_paths:
             substitutes[2] = len(BOLD + BLUE + RESET) # for highlighting filename if also showing path
         else:
             substitutes[2] = 0
@@ -182,7 +182,7 @@ def list_tasks(cli_tasks):
             max_widths[1] = max(max_widths[1], len(task_list_line_entry.path))
             max_widths[2] = max(max_widths[2], len(task_list_line_entry.linenumber))
 
-        if settings.show_paths_for_task_list == args.toggle_paths:
+        if task_loader.show_paths_for_task_list == args.toggle_paths:
             max_widths[1] -= substitutes[2]
 
         line_beginning_spacing = "  "

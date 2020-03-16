@@ -4,14 +4,14 @@ import configparser
 from gitviper.task import Task
 from gitviper.colors import *
 
-class Settings:
+from gitviper import directory_manager
+from gitviper.config_loader import get_config
+
+class TaskLoader:
     def __init__(self):
         self.tasks = []
         self.ignored_directories = []
         self.ignored_files = []
-
-        self.commit_author_max_length = 0
-        self.always_show_authors = True
 
         self.strip_comment_symbols = True
         self.show_paths_for_task_list = True
@@ -35,7 +35,7 @@ class Settings:
                 return
 
     def clear_tasks(self):
-        self.tasks = [] # will not update references made to 'settings.tasks'
+        self.tasks = [] # will not update references made to 'task_loader.tasks'
 
     def add_ignored_directory(self, new_dir):
         self.ignored_directories.append(new_dir)
@@ -56,12 +56,12 @@ def _call_function_with_every_line_in_file(function, dir_path, file_name):
                 function(line)
 
 def _load_ignored_files(dir_path):
-    _call_function_with_every_line_in_file(settings.add_ignored_file, dir_path, "ignored_files")
+    _call_function_with_every_line_in_file(task_loader.add_ignored_file, dir_path, "ignored_files")
 
 def _load_ignored_directories(dir_path):
-    _call_function_with_every_line_in_file(settings.add_ignored_directory, dir_path, "ignored_directories")
+    _call_function_with_every_line_in_file(task_loader.add_ignored_directory, dir_path, "ignored_directories")
 
-# load additional settings
+# load additional task_loader
 def _load_tasks_from_config_file(dir_path):
     full_path = dir_path + "/.gitviper/tasks"
 
@@ -76,7 +76,7 @@ def _load_tasks_from_config_file(dir_path):
         try:
             sec["disabled"] # can be used to override global tasks to avoid for specific projects
         except KeyError: # HACK using expected exception for logical flow!?!
-            settings.add_task(Task(
+            task_loader.add_task(Task(
                 section,
                 sec.get("key"),
                 sec.get("color"),
@@ -86,56 +86,15 @@ def _load_tasks_from_config_file(dir_path):
                 sec.getint("row")
             ))
         else:
-            settings.remove_task(section)
+            task_loader.remove_task(section)
 
-def _load_settings(dir_path):
-    full_path = dir_path + "/.gitviper/config"
+# Actual execution
+task_loader = TaskLoader()
 
-    if not os.path.isfile(full_path):
-        return
-
-    config = configparser.ConfigParser()
-    config.read(full_path)
-
-    # Commit Log Settings
-    try:
-        log_section = config["Log Settings"]
-    except KeyError:
-        pass
-    else:
-        val = log_section.getboolean("always-show-author")
-        if val != None:
-            settings.always_show_authors =  val
-
-        val = log_section.getint("commit-author-max-length")
-        if val:
-            settings.commit_author_max_length = val
-
-    # Task View Settings
-    try:
-        task_view_section = config["Task View"]
-    except KeyError:
-        pass
-    else:
-        val = task_view_section.getboolean("show-path")
-        if val != None:
-            settings.show_paths_for_task_list = val
-
-        val = task_view_section.getboolean("strip-comment-symbols")
-        if val != None:
-            settings.strip_comment_symbols = val
-
-
-# actual execution
-settings = Settings()
-
-from pathlib import Path
-home_dir = str(Path.home())
-project_dir = os.getcwd()
-directories = [home_dir, project_dir]
+# This will configured tasks (global and local)
+directories = directory_manager.get_directories()
 
 for directory in directories:
-    _load_settings(directory)
     _load_tasks_from_config_file(directory)
     _load_ignored_directories(directory)
     _load_ignored_files(directory)

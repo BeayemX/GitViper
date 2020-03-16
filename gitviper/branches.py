@@ -5,7 +5,6 @@ import gitviper.gitstuff as gitstuff
 
 from gitviper.colors import *
 from gitviper.gitconnector import connection
-from gitviper.settings import settings
 
 spacing = "  "
 branches_indentation = "   "
