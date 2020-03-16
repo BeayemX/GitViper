@@ -47,8 +47,7 @@ def list_tasks_of_diff(list_occurences):
 			for line in final_lines:
 				if task.value in line:
 					occurence_happened = True
-					l = remove_color_codes_from_string(line.strip())
-					l = l.strip('\t')
+					l = remove_color_codes_from_string(line).strip()
 					line_parts = l.split(task.value, 1)
 					l = f"  {line_parts[0]}{BOLD}{task.color}{task.value}{RESET}{line_parts[1]}"
 					print(f"{RESET}{WHITE}{l}")
