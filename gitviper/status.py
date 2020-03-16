@@ -9,7 +9,14 @@ from gitviper.gitconnector import connection
 # Constants
 spacing_sub_header = ' ' * 2
 spacing_files = ' ' * 4
+
 BINARY_KEYWORD = 'Bin'
+BINARY_INT_VALUE = -1
+
+UNKNOWN_KEYWORD = '?'
+UNKNOWN_INT_VALUE = -2
+
+
 
 STAGED = 'staged'
 UNSTAGED = 'unstaged'
@@ -58,7 +65,7 @@ def _generate_num_stats(s_files):
 		try:
 			adds, removes = [int(v) for v in line_data]
 		except:
-			adds, removes = [-1, -1]
+			adds, removes = [BINARY_INT_VALUE, BINARY_INT_VALUE]
 			has_bin = True
 		changed_lines[name] = [adds, removes]
 
@@ -157,8 +164,14 @@ def iterate_diffs(diffs, modifier, staged):
 
 	# Create symbol line
 	for text in texts:
-		added_lines_num = changed_lines[text['path']][0]
-		deleted_lines_num = changed_lines[text['path']][1]
+		added_lines_num = UNKNOWN_INT_VALUE
+		deleted_lines_num = UNKNOWN_INT_VALUE
+		try:
+			added_lines_num = changed_lines[text['path']][0]
+			deleted_lines_num = changed_lines[text['path']][1]
+		except KeyError:
+			# print("Possibly renamed file could not be matched", text['path'])
+			pass
 
 		adds = '+' * (int(round(added_lines_num / factor)))
 		deletes = '-' * (int(round(deleted_lines_num / factor)))
@@ -176,8 +189,10 @@ def iterate_diffs(diffs, modifier, staged):
 
 		# Show symbol for binary files
 		sum_info = added_lines_num + deleted_lines_num
-		if added_lines_num + deleted_lines_num < 0:
+		if added_lines_num == BINARY_INT_VALUE and deleted_lines_num == BINARY_INT_VALUE:
 			sum_info = BINARY_KEYWORD
+		elif added_lines_num == UNKNOWN_INT_VALUE and deleted_lines_num == UNKNOWN_INT_VALUE:
+			sum_info = UNKNOWN_KEYWORD
 
 		symbols_text = f"{str(sum_info).rjust(values.max_digits)} {GREEN}{adds}{RESET}{RED}{deletes}{RESET}"
 		print(f"{text['text']}{symbols_text}")
