@@ -6,6 +6,7 @@ import time
 
 # Gitviper
 import gitviper
+
 import gitviper.utilities
 import gitviper.gitconnector as gitconnector
 from gitviper.gitconnector import connection
@@ -13,10 +14,12 @@ from gitviper.colors import *
 
 from gitviper.config_loader import get_cli_added_final_config as get_config
 
-GITVIPER_PATH = os.path.dirname(os.path.realpath(__file__))
+from gitviper import directory_manager
+directory_manager.set_root_path(os.path.dirname(os.path.realpath(__file__)))
+
 
 # Load configuration
-full_path = f"{GITVIPER_PATH}/manifest.json"
+full_path = f"{directory_manager.get_root_path()}/manifest.json"
 with open(full_path) as json_file:
     manifest = json.load(json_file)
 
@@ -50,7 +53,7 @@ if len(sys.argv) > 1:
 
         # copy template files
         from shutil import copyfile
-        template_path = GITVIPER_PATH + "/templates"
+        template_path = directory_manager.get_root_path() + "/templates"
         local_template_path = PROJECT_DIRECTORY + "/.gitviper"
 
         for item in os.listdir(template_path):
@@ -96,7 +99,7 @@ if len(sys.argv) > 1:
 label = LABEL
 version = VERSION
 branch = ""
-branch_path = GITVIPER_PATH + '/.git/HEAD'
+branch_path = directory_manager.get_root_path() + '/.git/HEAD'
 if os.path.isfile(branch_path):
     with open(branch_path, 'r') as myfile:
         branch = myfile.readline().rstrip().rsplit("/")[-1]

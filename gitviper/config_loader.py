@@ -5,14 +5,6 @@ from pathlib import Path
 from gitviper import cli_args_loader
 from gitviper import directory_manager
 
-# Configure file directories
-GITVIPER_PATH = os.path.dirname(os.path.realpath(__name__))
-
-# Load configuration
-full_path = f"{GITVIPER_PATH}/templates/config.json"
-with open(full_path) as json_file:
-    template_config = json.load(json_file)
-
 
 def load_config(dir_path):
     full_path = dir_path + "/.gitviper/config.json"
@@ -50,6 +42,9 @@ def deep_merge_into(original, addition):
     process_member(original, addition)
 
 def get_startup_config():
+    full_path = f"{directory_manager.get_root_path()}/templates/config.json"
+    with open(full_path) as json_file:
+        template_config = json.load(json_file)
     return duplicate_config(template_config)
 
 final_config = None
