@@ -11,7 +11,17 @@ spacing = " " * 2
 taskspacing = " " * 2
 initial_spacing = " " * 2
 
+# Configuration
+DISPLAY_RESOLVED_TASKS = True
+
 def list_tasks_of_diff(list_occurences):
+	try:
+		_list_tasks_of_diff(list_occurences)
+	except ValueError as e:
+		print("Could not list tasks of diff!")
+		print(e)
+
+def _list_tasks_of_diff(list_occurences):
 	t = connection.repo.head.commit.tree
 	x = connection.repo.git.diff(t, '--color=always').split('\n')
 	y = connection.repo.git.diff(t, '--color=always', '--staged').split('\n')
@@ -20,55 +30,102 @@ def list_tasks_of_diff(list_occurences):
 	z = x # list staged and unstaged
 
 	final_lines = []
+	additions = []
+	deletions = []
 
 	for line in z:
 		if line.startswith(GREEN):
 			new_line = line.lstrip(GREEN)[1:]
 			final_lines.append(new_line)
+			additions.append(new_line)
 		elif line.startswith(RED):
 			new_line = line.lstrip(RED)[1:]
 			final_lines.append(new_line)
+			deletions.append(new_line)
 
-	counter_dict = {}
+	added_counter_dict = {}
+	deleted_counter_dict = {}
 
 	for task in task_loader.tasks:
-		counter_dict[task.value] = 0
+		added_counter_dict[task.value] = 0
+		deleted_counter_dict[task.value] = 0
 
-	not_empty = False
+	added_not_empty = False
+	deleted_not_empty = False
+
 	for task in task_loader.tasks:
-		for line in final_lines:
+		for line in additions:
 			if task.value in line:
-				counter_dict[task.value] += 1
-				not_empty = True
-
-	def list_tasks_in_changes():
-		for task in task_loader.tasks:
-			occurence_happened = False
-			for line in final_lines:
+				added_counter_dict[task.value] += 1
+				added_not_empty = True
+		if DISPLAY_RESOLVED_TASKS:
+			for line in deletions:
 				if task.value in line:
-					occurence_happened = True
+					deleted_counter_dict[task.value] += 1
+					deleted_not_empty = True
+
+
+	def list_tasks_in_changes(lines):
+		for task in task_loader.tasks:
+			# occurence_happened = False
+			for line in lines:
+				if task.value in line:
+					# occurence_happened = True
 					l = remove_color_codes_from_string(line).strip()
 					line_parts = l.split(task.value, 1)
 					l = f"  {line_parts[0]}{BOLD}{task.color}{task.value}{RESET}{line_parts[1]}"
 					print(f"{RESET}{WHITE}{l}")
-			if occurence_happened:
-				print()
+			# if occurence_happened:
+				# print()
 
 
-	if not_empty:
+	if added_not_empty:
 		# Highlight line
-		line = ' ' * utils.get_window_size().x
-		print(f"{BG_RED}{line}{RESET}")
+		title =  '  Newly introduced tasks'
+		line = title + ' ' * (utils.get_window_size().x - len(title))
+		print(f"{BG_RED}{BOLD}{line}{RESET}")
 		print()
 
 		# Print actual Tasks
-		print_tasks(counter_dict)
+		print_tasks(added_counter_dict)
 
 		if list_occurences:
-			list_tasks_in_changes()
+			list_tasks_in_changes(additions)
+
+		#title =  ''
+		#line = title + ' ' * (utils.get_window_size().x - len(title))
+		#print(f"{BG_RED}{line}{RESET}")
 
 		# Highlight line
-		print(f"{BG_RED}{line}{RESET}")
+		#print()
+
+	if DISPLAY_RESOLVED_TASKS and deleted_not_empty:
+		# Highlight line
+		title =  '  Resolved tasks'
+		line = title + ' ' * (utils.get_window_size().x - len(title))
+		if added_not_empty:
+			print()
+
+		print(f"{BG_GREEN}{BLACK}{line}{RESET}")
+		print()
+
+		# Print actual Tasks
+		print_tasks(deleted_counter_dict)
+
+		if list_occurences:
+			list_tasks_in_changes(deletions)
+
+
+		#title =  ''
+		#line = title + ' ' * (utils.get_window_size().x - len(title))
+		#print(f"{BG_GREEN}{line}{RESET}")
+
+		# Highlight line
+		#print()
+
+	if added_not_empty or (DISPLAY_RESOLVED_TASKS and deleted_not_empty):
+		line = '_' * utils.get_window_size().x
+		print(f"{WHITE}{line}{RESET}")
 		print()
 
 def list_tasks():
