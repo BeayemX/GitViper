@@ -30,7 +30,7 @@ VERSION = manifest["data"]["version"]
 # Custom CLI arguments
 if len(sys.argv) > 1:
     if sys.argv[1] == "init":
-        if not os.path.isdir(PROJECT_DIRECTORY + "/.git"):
+        if not os.path.isdir(directory_manager.PROJECT_DIRECTORY + "/.git"):
             arg_string = "--force"
             if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
                 pass
@@ -39,8 +39,8 @@ if len(sys.argv) > 1:
                 print("Use " + arg_string + " to force the creation of the .gitviper directory outside of a repository")
                 exit()
 
-        if not os.path.isdir(PROJECT_DIRECTORY + "/.gitviper"):
-            os.makedirs(PROJECT_DIRECTORY + "/.gitviper")
+        if not os.path.isdir(directory_manager.PROJECT_DIRECTORY + "/.gitviper"):
+            os.makedirs(directory_manager.PROJECT_DIRECTORY + "/.gitviper")
             print("Initialized GitViper.")
         else:
             arg_string = "--re-init"
@@ -54,7 +54,7 @@ if len(sys.argv) > 1:
         # copy template files
         from shutil import copyfile
         template_path = directory_manager.get_root_path() + "/templates"
-        local_template_path = PROJECT_DIRECTORY + "/.gitviper"
+        local_template_path = directory_manager.PROJECT_DIRECTORY + "/.gitviper"
 
         for item in os.listdir(template_path):
             copyfile(template_path + "/" + item, local_template_path + "/" + item)
