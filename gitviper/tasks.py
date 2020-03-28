@@ -63,17 +63,22 @@ def _list_tasks_of_diff():
 		unstaged_additions, unstaged_deletions = _sanitize(unstaged_diff)
 
 	has_content = False
+	staged_has_content = False
+	unstaged_has_content = False
 
 	# List staged Tasks
 	if conf['show_staged']:
-		has_content = create_stage_area("Staged", f"{BG_RED}{BOLD}{WHITE}", staged_additions, staged_deletions, f"{BOLD}{RED}", f"{BOLD}{RED}")
-
-	if has_content:
-		print()
+		staged_has_content = create_stage_area("Staged", f"{BG_RED}{BOLD}{WHITE}", staged_additions, staged_deletions, f"{BOLD}{RED}", f"{BOLD}{RED}")
+		if staged_has_content:
+			print()
 
 	# List unstaged Tasks
 	if conf['show_unstaged']:
-		has_content |= create_stage_area("Unstaged", f"{BG_YELLOW}{BOLD}{BLACK}", unstaged_additions, unstaged_deletions, f"{BOLD}{YELLOW}", f"{BOLD}{YELLOW}")
+		unstaged_has_content = create_stage_area("Unstaged", f"{BG_YELLOW}{BOLD}{BLACK}", unstaged_additions, unstaged_deletions, f"{BOLD}{YELLOW}", f"{BOLD}{YELLOW}")
+		if unstaged_has_content:
+			print()
+
+	has_content = staged_has_content | unstaged_has_content
 
 	# Finalize Tasks area
 	if has_content:
@@ -118,9 +123,6 @@ def create_stage_area(title, title_color, additions, deletions, add_color, del_c
 						remove_color_codes_from_string
 
 					print(f"{RESET}{WHITE}{l}")
-			# if occurence_happened:
-				# print()
-
 
 	def _print_task_area(title, color, dictionary, changes, use_full_line=False):
 		displayed_title = f' {title}'
@@ -146,14 +148,16 @@ def create_stage_area(title, title_color, additions, deletions, add_color, del_c
 
 	if conf['show_resolved'] and deleted_not_empty:
 		if added_not_empty:
-			print()
+			#print()
+			pass
 
 		_print_task_area("[ Resolved ]", del_color, deleted_counter_dict, deletions)
 
 	return has_content
 
 def draw_separator():
-	line = '_' * utils.get_window_size().x
+	char = '='
+	line = char * (utils.get_window_size().x // len(char))
 	print(f"{WHITE}{line}{RESET}")
 	print()
 
