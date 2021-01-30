@@ -1,5 +1,3 @@
-![image](https://user-images.githubusercontent.com/3453076/35360877-8035c5b2-015f-11e8-8ab2-1d74e65e3cd5.png)
-
 <p align="center">
     <img src="https://user-images.githubusercontent.com/3453076/35360877-8035c5b2-015f-11e8-8ab2-1d74e65e3cd5.png" alt="GitViper logo">
 </p>
