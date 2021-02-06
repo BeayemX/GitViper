@@ -68,7 +68,7 @@ def _list_tasks_of_diff():
 
 	# List staged Tasks
 	if conf['show_staged']:
-		staged_has_content = create_stage_area("Staged", f"{BG_RED}{BOLD}{WHITE}", staged_additions, staged_deletions, f"{BOLD}{RED}", f"{BOLD}{RED}")
+		staged_has_content = create_stage_area("Staged", f"{BG_RED}{BOLD}{WHITE}", staged_additions, staged_deletions, f"{BOLD}{RED}", f"{BOLD}{GREEN}")
 		if staged_has_content:
 			print()
 
