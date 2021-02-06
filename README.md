@@ -166,3 +166,5 @@ and you don't have to worry about global or local configurations.
 
 ## Feedback and bugs
 If you encounter bugs or want to request new features just open an issue.
+
+General questions can also be asked in #26.
