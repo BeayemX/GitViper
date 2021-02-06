@@ -1,6 +1,8 @@
 #!/bin/bash
 GITVIPER_DIRECTORY="$( builtin cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+source autocomplete.bash
+
 # actual GitViper scripts
 alias gitviper='python3 ${GITVIPER_DIRECTORY}/GitViper.py'
 function tasklist() { python3 "${GITVIPER_DIRECTORY}/TaskList.py" "$@" | gvless; }
