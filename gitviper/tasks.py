@@ -144,7 +144,7 @@ def create_stage_area(title, title_color, additions, deletions, add_color, del_c
 		print(f"{title_color}  {title}  {RESET}")
 
 	if added_not_empty:
-		_print_task_area("[ Added ]", add_color, added_counter_dict, additions)
+		_print_task_area("[ New ]", add_color, added_counter_dict, additions)
 
 	if conf['show_resolved'] and deleted_not_empty:
 		if added_not_empty:
