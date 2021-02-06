@@ -21,7 +21,7 @@ alias d="gvclear && git diff"
 alias ds="d --staged"
 
 # TaskView shortcuts
-alias todo='gvclear && tasklist'
+alias tasks='gvclear && tasklist'
 
 # logs
 # alias log="gitviper log | gvless"
