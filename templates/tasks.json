@@ -3,7 +3,7 @@
         "key": "TODO",
         "color": "yellow",
         "bold": true,
-        "font_color": "black",
+        "font_color": "white",
         "row": 0,
         "priority": 1
     },
@@ -15,9 +15,32 @@
         "row": 0,
         "priority": 10
     },
-    "XXX": {},
-    "asdf": {},
-    "???": {},
+    "BUG": {
+        "font_color": "white",
+        "color": "magenta",
+        "bold": true
+    },
+    "HACK": {
+        "key": "asdf",
+        "font_color": "white",
+        "color": "magenta",
+        "bold": false,
+        "priority": 10
+    },
+
+    "???": {
+        "row": 1,
+        "bold": true,
+        "font_color": "white",
+        "color": "cyan"
+    },
+
+    "XXX": {
+        "row": 1
+    },
+    "asdf": {
+        "row": 1
+    },
 
     "disabled_example": {
         "disabled": true
