@@ -19,6 +19,7 @@ class Occurence:
         self.linenumber = linenumber
         self.linecontent = linecontent
 
+
 class TaskListLineEntry():
     def __init__(self, linecontent = "", path = "", linenumber = ""):
         self.linecontent = linecontent
@@ -51,6 +52,7 @@ def split_stream(occurence, task): # TODO rename
     all_lines = []
 
     stream = stream.strip()
+
     # strip commenting symbols
     if task_loader.strip_comment_symbols:
         stream = stream.replace("#", "")
@@ -126,21 +128,21 @@ def list_tasks(cli_tasks):
     if cli_tasks != None:
         from gitviper.task import Task
         for cli_task in cli_tasks:
-            task_loader.add_task(Task(cli_task, None, None, None, None, None, None))
+            task_loader.add_task(Task(cli_task, {}))
 
-    # initialize dict
+    # Initialize dict
     for k in task_loader.tasks:
         occurences_dict[k] = []
 
-    # get files as list
+    # Get files as list
     files = utils.get_files()
 
-    # fill dictionary
+    # Fill dictionary
     for task in task_loader.tasks:
         for f in files:
             fill_dictionary(task, f)
 
-    # create list of dict entries and ignore empty task-entries
+    # Create list of dict entries and ignore empty task-entries
     occurences_dict_list = []
     for key in occurences_dict:
         if len(occurences_dict[key]) == 0:

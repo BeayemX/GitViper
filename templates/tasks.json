@@ -1,0 +1,25 @@
+{
+    "TODO": {
+        "key": "TODO",
+        "color": "yellow",
+        "bold": true,
+        "font_color": "black",
+        "row": 0,
+        "priority": 1
+    },
+    "FIXME": {
+        "key": "FIXME",
+        "color": "red",
+        "bold": true,
+        "font_color": "white",
+        "row": 0,
+        "priority": 10
+    },
+    "XXX": {},
+    "asdf": {},
+    "???": {},
+
+    "disabled_example": {
+        "disabled": true
+    }
+}

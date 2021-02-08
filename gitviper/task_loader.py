@@ -1,11 +1,12 @@
 import os.path
-import configparser
+import json
 
 from gitviper.task import Task
 from gitviper.colors import *
 
 from gitviper import directory_manager
 from gitviper.config_loader import get_config
+
 
 class TaskLoader:
     def __init__(self):
@@ -45,7 +46,8 @@ class TaskLoader:
 
 
 def _call_function_with_every_line_in_file(function, dir_path, file_name):
-    full_path = dir_path + "/.gitviper/" + file_name
+    full_path = dir_path + file_name
+
     if not os.path.isfile(full_path):
         return
 
@@ -55,43 +57,39 @@ def _call_function_with_every_line_in_file(function, dir_path, file_name):
             if line != '':
                 function(line)
 
+
 def _load_ignored_files(dir_path):
     _call_function_with_every_line_in_file(task_loader.add_ignored_file, dir_path, "ignored_files")
+
 
 def _load_ignored_directories(dir_path):
     _call_function_with_every_line_in_file(task_loader.add_ignored_directory, dir_path, "ignored_directories")
 
-# load additional task_loader
+
+# Load additional task_loader
 def _load_tasks_from_config_file(dir_path):
-    full_path = dir_path + "/.gitviper/tasks"
+    full_path = dir_path + "/tasks.json"
 
     if not os.path.isfile(full_path):
         return
 
-    config = configparser.ConfigParser(allow_no_value = True)
-    config.read(full_path)
+    try:
+        with open(full_path, 'r') as f:
+            config = json.load(f)
+    except json.decoder.JSONDecodeError:
+        print(f"JSON at '{full_path}' is corrupted!")
+        return
 
-    for section in config.sections():
-        sec = config[section]
-        try:
-            sec["disabled"] # can be used to override global tasks to avoid for specific projects
-        except KeyError: # HACK using expected exception for logical flow!?!
-            task_loader.add_task(Task(
-                section,
-                sec.get("key"),
-                sec.get("color"),
-                sec.getint("priority"),
-                sec.get("font color"),
-                sec.getboolean("bold"),
-                sec.getint("row")
-            ))
+    for task_name, task_obj in config.items():
+        if task_obj.get("disabled") == True:  # Can be used to override global tasks to avoid for specific projects
+            task_loader.remove_task(task_name)
         else:
-            task_loader.remove_task(section)
+            task_loader.add_task(Task(task_name, task_obj))
 
 # Actual execution
 task_loader = TaskLoader()
 
-# This will configured tasks (global and local)
+# This will load all configured tasks (global and local)
 directories = directory_manager.get_directories()
 
 for directory in directories:
