@@ -16,9 +16,9 @@ alias gv='gitviper'
 
 # git shortcuts
 alias s="gvclear && gitviper"
-alias c="gitviper_commit"
-alias a="gitviper_add"
-alias a.="gitviper_add_all"
+alias c="_gitviper_commit"
+alias a="_gitviper_add"
+alias a.="_gitviper_add_all"
 alias d="gvclear && git diff"
 alias ds="d --staged"
 
@@ -49,7 +49,7 @@ function pop() {
 }
 
 # functions used by aliases
-function gitviper_add() { git add "$@"; s; }
-function gitviper_add_all() { git add . "$@"; s; }
-function gitviper_commit() { gvclear; git commit -m "$@"; gitviper; }
-function gitviper_log() { git log "$@" --pretty=format:'%C(cyan)%ad|%C(green)%an|%Cgreen%d %Creset%s' --date=relative --all | column -ts'|' | gvless; }
+function _gitviper_add() { git add "$@"; s; }
+function _gitviper_add_all() { git add . "$@"; s; }
+function _gitviper_commit() { gvclear; git commit -m "$@"; gitviper; }
+function _gitviper_log() { git log "$@" --pretty=format:'%C(cyan)%ad|%C(green)%an|%Cgreen%d %Creset%s' --date=relative --all | column -ts'|' | gvless; }
