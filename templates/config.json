@@ -9,8 +9,8 @@
         },
         "settings": {
             "show_time": false,
-            "show_tasks_only_for_current_changes": true,
-            "show_task_lines_in_overview": true
+            "show_tasks_for_current_changes": true,
+            "show_task_lines_in_overview": false
         },
         "logging": {
             "number": 5,

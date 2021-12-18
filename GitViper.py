@@ -150,14 +150,14 @@ try:
     overview_config = final_config['overview']
 
     # Showing tasks also works for non-git directories
-    if not overview_config['settings']['show_tasks_only_for_current_changes']:
+    if overview_config['settings']['show_task_lines_in_overview']:
         if overview_config['areas']["tasks"]:
             finalize_category(gitviper.list_tasks())
 
     # Execute Git related code
     gitconnector.connect()
 
-    if overview_config['settings']['show_tasks_only_for_current_changes']:
+    if overview_config['settings']['show_tasks_for_current_changes']:
         if overview_config['areas']["tasks"]:
             finalize_category(gitviper.list_tasks_of_diff(overview_config['settings']["show_task_lines_in_overview"]))
 
