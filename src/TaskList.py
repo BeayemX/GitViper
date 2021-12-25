@@ -37,7 +37,7 @@ def fill_dictionary(task, file):
                 for num, line in enumerate(myFile, 1):
                     if task.value in line:
                         occurences.append([num, line])
-            except UnicodeDecodeError: #asdf
+            except UnicodeDecodeError:
                 pass
     except PermissionError:
         #print(RED, "Could not read", filename, RESET)
