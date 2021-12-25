@@ -31,13 +31,17 @@ class TaskListLineEntry():
 def fill_dictionary(task, file):
     occurences = []
     fullpath = osp.join(file[0], file[1])
-    with open(fullpath, 'r') as myFile:
-        try:
-            for num, line in enumerate(myFile, 1):
-                if task.value in line:
-                    occurences.append([num, line])
-        except UnicodeDecodeError:
-            pass
+    try:
+        with open(fullpath, 'r') as myFile:
+            try:
+                for num, line in enumerate(myFile, 1):
+                    if task.value in line:
+                        occurences.append([num, line])
+            except UnicodeDecodeError: #asdf
+                pass
+    except PermissionError:
+        #print(RED, "Could not read", filename, RESET)
+        pass
 
     if len(occurences) > 0:
         for o in occurences:
