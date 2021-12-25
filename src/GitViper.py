@@ -13,13 +13,11 @@ from gitviper.gitconnector import connection
 from gitviper.colors import *
 
 from gitviper.config_loader import get_cli_added_final_config as get_config
-
 from gitviper import directory_manager
-directory_manager.set_root_path(os.path.dirname(os.path.realpath(__file__)))
 
 
 # Load configuration
-full_path = f"{directory_manager.get_root_path()}/manifest.json"
+full_path = directory_manager.MANIFEST
 with open(full_path) as json_file:
     manifest = json.load(json_file)
 
@@ -53,8 +51,8 @@ if len(sys.argv) > 1:
 
         # copy template files
         from shutil import copyfile
-        template_path = directory_manager.get_root_path() + "/templates"
-        local_template_path = directory_manager.PROJECT_DIRECTORY + "/.gitviper"
+        template_path = directory_manager.TEMPLATES
+        local_template_path = directory_manager.LOCAL_GITVIPER_CONFIG_DIR
 
         for item in os.listdir(template_path):
             copyfile(template_path + "/" + item, local_template_path + "/" + item)
@@ -82,9 +80,12 @@ if len(sys.argv) > 1:
         elif sys.argv[1] == "tasks" or sys.argv[1] == "todo":
             print()
 
-            if overview_config["tasks"]:
-                gitviper.list_tasks_of_diff(overview_config['settings']["show_task_lines_in_overview"])
-            else:
+            if overview_config['settings']['show_tasks_for_current_changes'] or overview_config['settings']["show_tasks_for_current_changes_as_bars"]:
+                details = overview_config['settings']["show_tasks_for_current_changes"]
+                as_bars = overview_config['settings']["show_tasks_for_current_changes_as_bars"]
+                gitviper.list_tasks_of_diff(details, as_bars)
+
+            if overview_config['settings']['show_all_tasks']:
                 gitviper.list_tasks()
 
         else:
@@ -99,7 +100,7 @@ if len(sys.argv) > 1:
 label = LABEL
 version = VERSION
 branch = ""
-branch_path = directory_manager.get_root_path() + '/.git/HEAD'
+branch_path = directory_manager.GIT_HEAD
 if os.path.isfile(branch_path):
     with open(branch_path, 'r') as myfile:
         branch = myfile.readline().rstrip().rsplit("/")[-1]
@@ -150,16 +151,18 @@ try:
     overview_config = final_config['overview']
 
     # Showing tasks also works for non-git directories
-    if overview_config['settings']['show_task_lines_in_overview']:
+    if overview_config['settings']['show_all_tasks']:
         if overview_config['areas']["tasks"]:
             finalize_category(gitviper.list_tasks())
 
     # Execute Git related code
     gitconnector.connect()
 
-    if overview_config['settings']['show_tasks_for_current_changes']:
+    if overview_config['settings']['show_tasks_for_current_changes'] or overview_config['settings']["show_tasks_for_current_changes_as_bars"]:
         if overview_config['areas']["tasks"]:
-            finalize_category(gitviper.list_tasks_of_diff(overview_config['settings']["show_task_lines_in_overview"]))
+            details = overview_config['settings']["show_tasks_for_current_changes"]
+            as_bars = overview_config['settings']["show_tasks_for_current_changes_as_bars"]
+            finalize_category(gitviper.list_tasks_of_diff(details, as_bars))
 
     if connection.is_git_repo:
         if overview_config['areas']["branches"]:

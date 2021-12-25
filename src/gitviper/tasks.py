@@ -1,4 +1,3 @@
-from os import walk
 import os.path as osp
 
 from gitviper.task_loader import task_loader
@@ -15,14 +14,17 @@ initial_spacing = " " * 2
 
 # TODO Put these settings into a config file and/or make available through CLI
 conf = {
-	'list_occurences': True,
+	'list_local_changes_as_detailed_list': True,
+	'list_local_changes_as_badges': False,
 	'show_staged': True,
 	'show_unstaged': True,
 	'show_resolved': True
 }
 
-def list_tasks_of_diff(list_occurences):
-	conf['list_occurences'] = list_occurences
+def list_tasks_of_diff(details, show_as_bar):
+	conf['list_local_changes_as_detailed_list'] = details
+	conf['list_local_changes_as_badges'] = show_as_bar
+
 	try:
 		_list_tasks_of_diff()
 	except ValueError as e:
@@ -133,9 +135,11 @@ def create_stage_area(title, title_color, additions, deletions, add_color, del_c
 
 		print(f"{color}{line}{RESET}")
 
-		# print_tasks(dictionary) # Show badges
 
-		if conf['list_occurences']:
+		if (conf['list_local_changes_as_badges']):
+			print_tasks(dictionary)
+
+		if conf['list_local_changes_as_detailed_list']:
 			list_tasks_in_changes(changes)
 
 	# todo

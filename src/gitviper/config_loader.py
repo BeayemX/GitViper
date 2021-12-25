@@ -26,6 +26,7 @@ def duplicate_config(original_config):
 def print_config(cfg):
     print(json.dumps(cfg, indent=2))
 
+# FIXME can standard dictionary-merge be used here?
 def deep_merge_into(original, addition):
     def process_member(source, target):
         for key, value in source.items():
@@ -42,7 +43,7 @@ def deep_merge_into(original, addition):
     process_member(original, addition)
 
 def get_startup_config():
-    full_path = f"{directory_manager.get_root_path()}/templates/config.json"
+    full_path = directory_manager.TEMPLATES + '/config.json'
     with open(full_path) as json_file:
         template_config = json.load(json_file)
     return duplicate_config(template_config)

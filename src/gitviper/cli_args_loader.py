@@ -45,7 +45,7 @@ def load_cli_config():
             "settings": {
                 "show_time": args.time,
                 "show_tasks_only_for_current_changes": args.tasks_diff,
-                "show_task_lines_in_overview": args.list_tasks_diff
+                "show_all_tasks": args.list_tasks_diff
             },
             "logging": {
                 "number": args.log_number,

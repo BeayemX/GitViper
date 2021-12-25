@@ -90,7 +90,11 @@ def _load_tasks_from_config_file(dir_path):
 task_loader = TaskLoader()
 
 # This will load all configured tasks (global and local)
-directories = directory_manager.get_directories()
+directories = [
+    directory_manager.TEMPLATES,
+    directory_manager.HOME_CONFIG,
+    directory_manager.LOCAL_GITVIPER_CONFIG_DIR
+]
 
 for directory in directories:
     _load_tasks_from_config_file(directory)
