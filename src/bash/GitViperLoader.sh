@@ -1,7 +1,7 @@
 #!/bin/bash
-GITVIPER_DIRECTORY="$( builtin cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+GITVIPER_DIRECTORY="$( builtin cd "$( dirname "${BASH_SOURCE[0]}" )" && builtin cd .. && pwd )"
 
-source ${GITVIPER_DIRECTORY}/autocomplete.bash
+source ${GITVIPER_DIRECTORY}/bash/autocomplete.bash
 
 # actual GitViper scripts
 alias gitviper='python3 ${GITVIPER_DIRECTORY}/GitViper.py'
