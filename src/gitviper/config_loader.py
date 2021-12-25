@@ -26,7 +26,7 @@ def duplicate_config(original_config):
 def print_config(cfg):
     print(json.dumps(cfg, indent=2))
 
-# FIXME can standard dictionary-merge be used here?
+# Can't use Python dictionary-merge functionality because that would only do a shallow merge!
 def deep_merge_into(original, addition):
     def process_member(source, target):
         for key, value in source.items():
@@ -77,8 +77,20 @@ def get_cli_added_final_config():
     add_cli_config(cli_config, final_config, cli_args)
 
     if cli_args['debug']:
-        print("Final config")
-        print_config(final_config)
+        config_steps = (
+            ("Default config", get_startup_config()),
+            ("Global config", load_config(directory_manager.HOME_DIRECTORY)),
+            ("Local config", load_config(directory_manager.PROJECT_DIRECTORY)),
+            ("Command line config", cli_config),
+            ("Final config", final_config)
+        )
+
+        for config_name, config_data in config_steps:
+            # TODO it would be helpful to see only the difference to previous config
+            if config_data:
+                print(f"---{config_name}---")
+                print_config(config_data)
+                print()
 
     return final_config
 
