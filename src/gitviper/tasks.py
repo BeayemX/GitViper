@@ -6,9 +6,11 @@ from gitviper.gitconnector import connection
 
 import gitviper.utilities as utils
 
+
 spacing = " " * 2
 taskspacing = " " * 2
 initial_spacing = " " * 2
+
 
 # Configuration
 

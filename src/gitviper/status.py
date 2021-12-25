@@ -1,10 +1,9 @@
-from git import Repo, Commit
-
 import gitviper.utilities as util
 import gitviper.gui as gui
 from gitviper.colors import *
 
 from gitviper.gitconnector import connection
+
 
 # Constants
 spacing_sub_header = ' ' * 2
@@ -16,10 +15,9 @@ BINARY_INT_VALUE = -1
 UNKNOWN_KEYWORD = '?'
 UNKNOWN_INT_VALUE = -2
 
-
-
 STAGED = 'staged'
 UNSTAGED = 'unstaged'
+
 
 # Just to avoid passing variables multiple time through various functions...
 class Variables: pass
@@ -28,6 +26,7 @@ values.max_value = 0 # don't reset when for switching between staged/unstaged
 values.max_character_num = 0
 values.max_digits = 0
 values.max_used_space = 0
+
 
 def list_status():
 	if connection.repo.is_dirty() or len(connection.repo.untracked_files) > 0:

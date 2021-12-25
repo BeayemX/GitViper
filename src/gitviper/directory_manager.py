@@ -1,7 +1,6 @@
-import os
 from pathlib import Path
 
-GITVIPER_DIRECTORY = Path(__file__).parent.parent  # GitViper root
+GITVIPER_DIRECTORY = Path(__file__).parent.parent
 
 HOME_DIRECTORY = str(Path.home())
 PROJECT_DIRECTORY = str(Path.cwd())

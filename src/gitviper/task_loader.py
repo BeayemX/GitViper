@@ -5,7 +5,6 @@ from gitviper.task import Task
 from gitviper.colors import *
 
 from gitviper import directory_manager
-from gitviper.config_loader import get_config
 
 
 class TaskLoader:

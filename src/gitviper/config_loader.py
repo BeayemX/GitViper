@@ -1,6 +1,5 @@
 import os
 import json
-from pathlib import Path
 
 from gitviper import cli_args_loader
 from gitviper import directory_manager

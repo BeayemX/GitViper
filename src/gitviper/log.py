@@ -9,9 +9,11 @@ import gitviper.utilities as utilities
 from gitviper.colors import *
 
 from gitviper.config_loader import get_config
-final_config = None
 
+
+final_config = None
 spacing = "  "
+
 
 class CommitListEntry:
 	def __init__(self, date, relative_date, author, message):

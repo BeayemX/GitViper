@@ -1,9 +1,11 @@
 import os
 from os import walk
+from datetime import datetime, timedelta
+
+import humanize # pip
+
 from gitviper.task_loader import task_loader
 
-from datetime import datetime, timedelta
-import humanize
 
 class Vector2:
 	def __init__(self, x, y):

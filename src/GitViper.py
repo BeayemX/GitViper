@@ -25,6 +25,7 @@ with open(full_path) as json_file:
 LABEL = manifest["data"]["label"]
 VERSION = manifest["data"]["version"]
 
+
 # Custom CLI arguments
 if len(sys.argv) > 1:
     if sys.argv[1] == "init":

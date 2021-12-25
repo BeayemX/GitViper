@@ -5,7 +5,9 @@ import gitviper.gui as gui
 from gitviper.colors import *
 from gitviper.gitconnector import connection
 
+
 spacing = 2
+
 
 def list_stash():
 	if stash_exists():
@@ -21,14 +23,14 @@ def stash_exists():
 def print_stash():
 	gui.print_header("Stash", BG_YELLOW)
 
-	# get stash information from git
+	# Get stash information from git
 	repo = connection.repo
 	refs = repo.head.repo.refs
 	stash = refs["refs/stash"]
 	stash_log = stash.log()
 	stash_log.reverse()
 
-	# create entry to be formated as table
+	# Create entry to be formated as table
 	stash_list = []
 	stash_counter = 0
 
@@ -42,9 +44,9 @@ def print_stash():
 		stash_list.append(entry)
 		stash_counter += 1
 
-	# print stash information as table
+	# Print stash information as table
 
-	# calculate max widths needed
+	# Calculate max widths needed
 	col_num = len(stash_list[0])
 	max_col_widths = [0] * col_num
 
@@ -52,16 +54,16 @@ def print_stash():
 		for i in range(col_num):
 			max_col_widths[i] = max(max_col_widths[i], len(entry[i]) + spacing)
 
-	# cap message length so there is no line break
+	# Cap message length so there is no line break
 	w = util.get_window_size()
 	msg_length = w.x - max_col_widths[0] - max_col_widths[1]
 
-	# use max length
+	# Use max length
 	max_col_widths[2] = msg_length
 	for entry in stash_list:
 		entry[2] = entry[2][:msg_length]
 
-	# print table
+	# Print table
 	for entry in stash_list:
 		text = ""
 

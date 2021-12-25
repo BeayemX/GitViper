@@ -1,5 +1,5 @@
 import os
-from git import InvalidGitRepositoryError, Repo
+from git import Repo
 from gitviper.colors import *
 
 class Connection:

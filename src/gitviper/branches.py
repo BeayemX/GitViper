@@ -1,13 +1,13 @@
-from pprint import pprint
-
 import gitviper.gui as gui
 import gitviper.gitstuff as gitstuff
 
 from gitviper.colors import *
 from gitviper.gitconnector import connection
 
+
 spacing = "  "
 branches_indentation = "   "
+
 
 def list_branches(force_show = False):
     if force_show or should_show_branches():

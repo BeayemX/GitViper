@@ -7,6 +7,7 @@ from gitviper.colors import *
 import gitviper.utilities as utils
 from gitviper.task_loader import task_loader
 
+
 occurences_dict = {}
 spacing = "   "
 window_padding = " "
