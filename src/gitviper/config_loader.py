@@ -5,6 +5,7 @@ from pathlib import Path
 from gitviper import cli_args_loader
 from gitviper import directory_manager
 
+final_config = None
 
 def load_config(dir_path):
     full_path = dir_path + "/.gitviper/config.json"
@@ -48,7 +49,6 @@ def get_startup_config():
         template_config = json.load(json_file)
     return duplicate_config(template_config)
 
-final_config = None
 def get_config():
     global final_config
 

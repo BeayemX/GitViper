@@ -59,11 +59,11 @@ def _call_function_with_every_line_in_file(function, dir_path, file_name):
 
 
 def _load_ignored_files(dir_path):
-    _call_function_with_every_line_in_file(task_loader.add_ignored_file, dir_path, "ignored_files")
+    _call_function_with_every_line_in_file(task_loader.add_ignored_file, dir_path, "/ignored_files")
 
 
 def _load_ignored_directories(dir_path):
-    _call_function_with_every_line_in_file(task_loader.add_ignored_directory, dir_path, "ignored_directories")
+    _call_function_with_every_line_in_file(task_loader.add_ignored_directory, dir_path, "/ignored_directories")
 
 
 # Load additional task_loader
