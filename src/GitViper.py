@@ -3,6 +3,8 @@ import os
 import json
 import sys
 import time
+from shutil import copyfile
+
 
 # Gitviper
 import gitviper
@@ -98,8 +100,6 @@ if len(sys.argv) > 1:
 
 
 # Generate label
-label = LABEL
-version = VERSION
 branch = ""
 branch_path = directory_manager.GIT_HEAD
 if os.path.isfile(branch_path):
@@ -113,7 +113,7 @@ if os.path.isfile(branch_path):
 
 ## Show GitViper label
 window_width = gitviper.utilities.get_window_size().x
-labeltext = f"{label} {version}-{branch}"
+labeltext = f"{LABEL} {VERSION}-{branch}"
 if labeltext[-1] == "-":
     labeltext = labeltext[0 : -1]
 labeltext = labeltext.rjust(window_width)
