@@ -1,10 +1,8 @@
-# gitviper folder
-import gitviper.gitstuff
-import gitviper.status
-import gitviper.stash
-import gitviper.log
-import gitviper.branches
-import gitviper.tasks
+import gitviper.status as status
+import gitviper.stash as stash
+import gitviper.log as log
+import gitviper.branches as branches
+import gitviper.tasks as tasks
 
 list_branches = branches.list_branches
 list_logs = log.list_logs
