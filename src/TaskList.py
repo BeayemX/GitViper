@@ -212,9 +212,7 @@ def list_tasks(cli_tasks):
             filename = task_list_line_entry.path.ljust(max_widths[1] + substitutes[2]) + spacing
             linenumber = task_list_line_entry.linenumber.rjust(max_widths[2])
 
-
-            # TODO use python3.6 f-strings
-            text = "%s%s%s%s"%(taskword,line, filename,linenumber)
+            text = f"{taskword}{line}{filename}{linenumber}"
             print(text)
 
         print()
