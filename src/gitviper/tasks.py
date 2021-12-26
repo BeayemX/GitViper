@@ -20,12 +20,14 @@ conf = {
 	'list_local_changes_as_badges': False,
 	'show_staged': True,
 	'show_unstaged': True,
-	'show_resolved': True
+	'show_resolved': True,
+	'draw_separator_line': True
 }
 
-def list_tasks_of_diff(details, show_as_bar):
+def list_tasks_of_diff(details, show_as_bar, draw_separator_line=True):
 	conf['list_local_changes_as_detailed_list'] = details
 	conf['list_local_changes_as_badges'] = show_as_bar
+	conf['draw_separator_line'] = draw_separator_line
 
 	try:
 		_list_tasks_of_diff()
@@ -85,7 +87,7 @@ def _list_tasks_of_diff():
 	has_content = staged_has_content | unstaged_has_content
 
 	# Finalize Tasks area
-	if has_content:
+	if has_content and conf['draw_separator_line']:
 		draw_separator()
 
 def create_stage_area(title, title_color, additions, deletions, add_color, del_color):

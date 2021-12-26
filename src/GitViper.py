@@ -28,68 +28,71 @@ LABEL = manifest["data"]["label"]
 VERSION = manifest["data"]["version"]
 
 
+# GitViper configuration
+final_config_without_cli = get_config(True)
+overview_config = final_config_without_cli['overview']
+
+
 # Custom CLI arguments
+def initialize_gitviper_config_files():
+    if not os.path.isdir(directory_manager.PROJECT_DIRECTORY + "/.git"):
+        arg_string = "--force"
+        if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
+            pass
+        else:
+            print("This is not a git repository!")
+            print("Use " + arg_string + " to force the creation of the .gitviper directory outside of a repository")
+            exit()
+
+    if not os.path.isdir(directory_manager.PROJECT_DIRECTORY + "/.gitviper"):
+        os.makedirs(directory_manager.PROJECT_DIRECTORY + "/.gitviper")
+        print("Initialized GitViper.")
+    else:
+        arg_string = "--re-init"
+        if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
+            print("Reinitialized GitViper configuration.")
+        else:
+            print("Configuration folder already exists!")
+            print("Use " + arg_string + " to overwrite existing settings.")
+            exit()
+
+    # Copy template files
+    template_path = directory_manager.TEMPLATES
+    local_template_path = directory_manager.LOCAL_GITVIPER_CONFIG_DIR
+
+    for item in os.listdir(template_path):
+        copyfile(template_path + "/" + item, local_template_path + "/" + item)
+    exit()
+
+
 if len(sys.argv) > 1:
     if sys.argv[1] == "init":
-        if not os.path.isdir(directory_manager.PROJECT_DIRECTORY + "/.git"):
-            arg_string = "--force"
-            if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
-                pass
-            else:
-                print("This is not a git repository!")
-                print("Use " + arg_string + " to force the creation of the .gitviper directory outside of a repository")
-                exit()
-
-        if not os.path.isdir(directory_manager.PROJECT_DIRECTORY + "/.gitviper"):
-            os.makedirs(directory_manager.PROJECT_DIRECTORY + "/.gitviper")
-            print("Initialized GitViper.")
-        else:
-            arg_string = "--re-init"
-            if (len(sys.argv) > 2 and sys.argv[2] == arg_string) or (len(sys.argv) > 3 and sys.argv[3] == arg_string):
-                print("Reinitialized GitViper configuration.")
-            else:
-                print("Configuration folder already exists!")
-                print("Use " + arg_string + " to overwrite existing settings.")
-                exit()
-
-        # copy template files
-        from shutil import copyfile
-        template_path = directory_manager.TEMPLATES
-        local_template_path = directory_manager.LOCAL_GITVIPER_CONFIG_DIR
-
-        for item in os.listdir(template_path):
-            copyfile(template_path + "/" + item, local_template_path + "/" + item)
-        exit()
-
+        initialize_gitviper_config_files()
     else:
         sys_argv_has_been_handled = True
 
         gitconnector.connect()
+        print()
+
         if sys.argv[1] == "status":
-            print()
             gitviper.list_status()
         elif sys.argv[1] == "stash":
-            print()
             gitviper.list_stash()
         elif sys.argv[1] == "log":
-            print()
             if len(sys.argv) < 3:
                 gitviper.list_logs(-1, 0, True)
             else:
                 gitviper.list_logs(sys.argv[2], 0, True)
         elif sys.argv[1] == "branch" or sys.argv[1] == "branches":
-            print()
             gitviper.list_branches(True)
         elif sys.argv[1] == "tasks" or sys.argv[1] == "todo":
-            print()
+            if overview_config['settings']['show_all_tasks']:
+                gitviper.list_tasks()
 
             if overview_config['settings']['show_tasks_for_current_changes'] or overview_config['settings']["show_tasks_for_current_changes_as_bars"]:
                 details = overview_config['settings']["show_tasks_for_current_changes"]
                 as_bars = overview_config['settings']["show_tasks_for_current_changes_as_bars"]
-                gitviper.list_tasks_of_diff(details, as_bars)
-
-            if overview_config['settings']['show_all_tasks']:
-                gitviper.list_tasks()
+                gitviper.list_tasks_of_diff(details, as_bars, False)
 
         else:
             sys_argv_has_been_handled = False
@@ -146,10 +149,13 @@ def finalize_category(category_is_visible):
     else:
         reset_time()
 
+
+# Load config, now considering command line arguments
+final_config = get_config()
+overview_config = final_config['overview']
+
 # Main
 try:
-    final_config = get_config()
-    overview_config = final_config['overview']
 
     # Showing tasks also works for non-git directories
     if overview_config['settings']['show_all_tasks']:

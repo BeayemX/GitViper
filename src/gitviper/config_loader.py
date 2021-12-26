@@ -65,7 +65,10 @@ def get_config():
 
     return final_config
 
-def get_cli_added_final_config():
+def get_cli_added_final_config(ignore_command_line=False):
+    if ignore_command_line:
+        return get_config()
+
     cli_args, cli_config = cli_args_loader.load_cli_config()
 
     if cli_args['ignore_config_files']:

@@ -3,7 +3,7 @@
 function _get_gitviper_commands() {
     echo status
     echo log
-    echo tasks # FIXME 'gitviper tasks' does not work
+    echo tasks
     echo stash
     echo branch
 }
