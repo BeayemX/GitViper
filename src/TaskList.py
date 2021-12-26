@@ -28,6 +28,7 @@ class TaskListLineEntry():
         self.linenumber = linenumber
 
 
+# TODO similar to tasks.py -> count_tasks()?
 def fill_dictionary(task, file):
     occurences = []
     fullpath = osp.join(file[0], file[1])

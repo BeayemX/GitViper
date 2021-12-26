@@ -211,6 +211,7 @@ def print_tasks(counter_dict):
 
 	return len(lines) > 0
 
+# TODO similar to as TaskList.py -> fill_dictionary() ?
 def count_tasks(filename, counter_dict):
 	try:
 		with open(filename, 'r') as myfile:
