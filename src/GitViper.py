@@ -123,20 +123,20 @@ labeltext = labeltext.rjust(window_width)
 print(labeltext)
 
 ## Calculate times
-start_time = time.time()
+start_time = time.perf_counter()
 current_time = start_time
 
 time_separator = "-" * window_width
 
 def show_time():
     global current_time
-    delta_time = str(round(time.time() - current_time, 3))
+    delta_time = str(round(time.perf_counter() - current_time, 3))
     print(BOLD + BLUE + (delta_time + " seconds ").rjust(window_width) + RESET)
     reset_time()
 
 def reset_time():
     global current_time
-    current_time = time.time()
+    current_time = time.perf_counter()
 
 def finalize_category(category_is_visible):
     if category_is_visible:
