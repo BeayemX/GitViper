@@ -224,6 +224,8 @@ def count_tasks(filename, counter_dict):
 			except UnicodeDecodeError:
 				#print(RED, "Could not read", filename, RESET)
 				pass
+	except FileNotFoundError:
+		print("File not found: ", filename)
 	except PermissionError:
 		#print(RED, "Could not read", filename, RESET)
 		pass
