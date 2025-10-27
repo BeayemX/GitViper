@@ -45,6 +45,7 @@ podman run -it --rm -v $(pwd):/repo:ro gitviper  # Run gitviper in the current d
 ### Known issues
 * `GitViperLoader.sh` hasn't been updated yet to work with the container
 * Autocompletion does not (yet?) work
+* Config file in the home directory will be ignored as it is not accessible
 
 ## How to use GitViper
 There are two python files you can use. `GitViper.py` is used to display the mainview for the current repository. Your current working directory has to be the root level of a git repository. Individual sections can also be display solely. You can see every command in the according section.
