@@ -1,53 +1,4 @@
-<p align="center">
-    <img src="https://user-images.githubusercontent.com/3453076/35360877-8035c5b2-015f-11e8-8ab2-1d74e65e3cd5.png" alt="GitViper logo">
-</p>
-
-# GitViper
-GitViper is a tool to improve the experience when using Git with the command line by showing you the current state of the repository. This tool is designed to only display git related information. You can still work with Git and modify files the way you want.
-
-
-## Installation
-GitViper builds on top of Git, therefore it is required to have Git installed on your system. Just use your package manager to install Git. The command should look something along these lines:
-```
-sudo apt-get install git
-sudo dnf install git
-```
-
-GitViper uses **[GitPython](https://github.com/gitpython-developers/GitPython)** for working with the git repository and the **[humanize](https://github.com/jmoiron/humanize)** package to display times and dates in a more readable way.
-
-All dependencies can be installed using the provided `requirements.txt` by running
-
-```
-pip3 install -r requirements.txt
-```
-
-which needs:
-
-```
-sudo apt install python3-pip
-```
-
-Alternativly the humanize package can be installed with
-
-```
-sudo apt-get install python3-humanize
-```
-
-on Linux Mint or something similar on other distros.
-
-## Docker / Podman
-
-```bash
-podman build -t gitviper .                       # Build image
-podman run -it --rm -v $(pwd):/repo:ro gitviper  # Run gitviper in the current directory
-```
-
-### Known issues
-* `GitViperLoader.sh` hasn't been updated yet to work with the container
-* Autocompletion does not (yet?) work
-* Config file in the home directory will be ignored as it is not accessible
-
-## How to use GitViper
+# How to use GitViper
 There are two python files you can use. `GitViper.py` is used to display the mainview for the current repository. Your current working directory has to be the root level of a git repository. Individual sections can also be display solely. You can see every command in the according section.
 
 The second file is `TaskList.py` which is used to list all occurences of task-keywords.
@@ -175,9 +126,3 @@ gitviper --ignore-conf -l -inv -ln 10
 ```
 
 and you don't have to worry about global or local configurations.
-
-
-## Feedback and bugs
-If you encounter bugs or want to request new features just open an issue.
-
-General questions can also be asked in the [Project discussion issue](https://github.com/BeayemX/GitViper/issues/26).

@@ -3,18 +3,18 @@ GITVIPER_DIRECTORY="$( builtin cd "$( dirname "${BASH_SOURCE[0]}" )" && builtin 
 
 source ${GITVIPER_DIRECTORY}/bash/autocomplete.bash
 
-# actual GitViper scripts
-alias gitviper='python3 ${GITVIPER_DIRECTORY}/GitViper.py'
+# Actual GitViper scripts
+alias gitviper='python3 ${GITVIPER_DIRECTORY}/main.py'
 function tasklist() { python3 "${GITVIPER_DIRECTORY}/TaskList.py" "$@" | gvless; }
 
-# utility functions
+# Utility functions
 function gvless() { less --raw-control-chars --quit-if-one-screen --no-init; }
 function gvclear() { tput reset; }
 
 alias q='gvclear'
 alias gv='gitviper'
 
-# git shortcuts
+# Git shortcuts
 alias s="gvclear && gitviper"
 alias c="_gitviper_commit"
 alias a="_gitviper_add"

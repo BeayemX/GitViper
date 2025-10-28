@@ -10,4 +10,4 @@ RUN cd /app && pip install --no-cache-dir -r requirements.txt
 COPY ./src/ /app/
 
 WORKDIR /repo
-ENTRYPOINT ["python", "/app/GitViper.py"]
+ENTRYPOINT ["python", "/app/main.py"]
